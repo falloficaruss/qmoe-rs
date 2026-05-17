@@ -1,5 +1,7 @@
-pub mod tensor;
+#![feature(portable_simd)]
 
+pub mod simd;
+pub mod tensor;
 use anyhow::Result;
 use clap::Parser;
 

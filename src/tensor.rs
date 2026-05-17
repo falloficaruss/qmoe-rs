@@ -39,11 +39,36 @@ impl PackedQMoETensor {
 
     /// Performs the fused decompression + Matrix-Vector multiplication.
     /// This is where the core SIMD unpacking logic will reside.
-    pub fn forward_simd(&self, _x: &Tensor) -> Result<Tensor> {
-        // TODO: Implement `std::simd` unpacking logic here.
-        // For now, we return a dummy tensor to satisfy the compiler.
-        let (out_features, _in_features) = self.shape;
-        let dummy_out = Tensor::zeros(out_features, candle_core::DType::F32, &Device::Cpu)?;
-        Ok(dummy_out)
+    pub fn forward_simd(&self, x: &Tensor) -> Result<Tensor> {
+        let (out_features, in_features) = self.shape;
+        
+        // We assume `x` is a 1D tensor for this basic GEMV
+        let x_vec = x.flatten_all()?.to_vec1::<f32>()?;
+        if x_vec.len() != in_features {
+            anyhow::bail!("Input tensor size {} does not match in_features {}", x_vec.len(), in_features);
+        }
+        
+        let scales_vec = self.scales.flatten_all()?.to_vec1::<f32>()?;
+        
+        let mut out_data = Vec::with_capacity(out_features);
+        
+        // The packed data is continuous. Each output feature row corresponds to a chunk of packed weights.
+        // Assuming 4 weights per byte, each row is in_features / 4 bytes long.
+        let bytes_per_row = in_features / 4;
+        
+        for i in 0..out_features {
+            let start = i * bytes_per_row;
+            let end = start + bytes_per_row;
+            let row_packed = &self.data[start..end];
+            let scale = scales_vec[i];
+            
+            // Call the highly optimized SIMD kernel
+            let dot = crate::simd::fused_dequantize_and_dot(row_packed, &x_vec, scale);
+            out_data.push(dot);
+        }
+        
+        // Create the final output tensor
+        let out_tensor = Tensor::from_vec(out_data, out_features, &Device::Cpu)?;
+        Ok(out_tensor)
     }
 }
