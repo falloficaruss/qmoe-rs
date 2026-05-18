@@ -43,3 +43,24 @@ pub fn fused_dequantize_and_dot(
     // Horizontal sum of the final accumulator, multiplied by the block's scaling factor
     sum.reduce_sum() * scale
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_simd_fused_unpack_and_dot() {
+        // Create 1 byte containing 4 packed weights:
+        // Pack: w3 << 6 | w2 << 4 | w1 << 2 | w0
+        // We pack: w0=0 (-1.0), w1=2 (1.0), w2=1 (0.0), w3=1 (0.0)
+        // binary: [01 | 01 | 10 | 00] => [01011000] = 0x58 = 88
+        let packed_weights = vec![0b01011000]; // weights = [-1.0, 1.0, 0.0, 0.0]
+        let activations = vec![2.0, 3.0, 4.0, 5.0];
+        let scale = 1.5;
+        
+        // Dot product = (-1.0 * 2.0) + (1.0 * 3.0) + (0.0 * 4.0) + (0.0 * 5.0) = 1.0
+        // Scaled dot product = 1.0 * 1.5 = 1.5
+        let result = fused_dequantize_and_dot(&packed_weights, &activations, scale);
+        assert!((result - 1.5).abs() < 1e-5, "Expected 1.5, got {}", result);
+    }
+}
