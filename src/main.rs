@@ -96,7 +96,7 @@ fn main() -> Result<()> {
         let logits = model.forward(&input_tensor)?;
         
         // Simple argmax sampling
-        let logits_vec = logits.to_vec1::<f32>()?;
+        let logits_vec = logits.flatten_all()?.to_vec1::<f32>()?;
         let next_token = logits_vec
             .iter()
             .enumerate()

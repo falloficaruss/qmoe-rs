@@ -1,5 +1,5 @@
 use anyhow::Result;
-use candle_core::{Device, Tensor};
+use candle_core::{Module, Tensor};
 use candle_nn::{Embedding, VarBuilder};
 use crate::moe::{QMoELayer, MoEConfig, PackedExpert};
 
@@ -21,7 +21,7 @@ pub struct AttentionScaffold {
 
 impl AttentionScaffold {
     pub fn new(vb: VarBuilder, hidden_size: usize, num_heads: usize) -> Result<Self> {
-        let head_dim = hidden_size / num_heads;
+        let _head_dim = hidden_size / num_heads;
         let q_proj = candle_nn::linear(hidden_size, hidden_size, vb.pp("q_proj"))?;
         let k_proj = candle_nn::linear(hidden_size, hidden_size, vb.pp("k_proj"))?;
         let v_proj = candle_nn::linear(hidden_size, hidden_size, vb.pp("v_proj"))?;
@@ -51,7 +51,7 @@ impl AttentionScaffold {
         let scores = q.matmul(&k.transpose(2, 3)?)?;
         let scale = 1.0 / (head_dim as f64).sqrt();
         let scores = (scores * scale)?;
-        let attn_weights = candle_nn::ops::softmax(&scores, candle_core::sym::Last)?;
+        let attn_weights = candle_nn::ops::softmax(&scores, 3)?;
         
         let context = attn_weights.matmul(&v)?;
         let context = context.transpose(1, 2)?.reshape((b_sz, seq_len, ()))?;
@@ -104,7 +104,7 @@ pub struct DeepSeekCoderV2 {
 }
 
 impl DeepSeekCoderV2 {
-    pub fn new(vb: VarBuilder, config: &ModelConfig, all_layers_experts: Vec<Vec<PackedExpert>>) -> Result<Self> {
+    pub fn new(vb: VarBuilder, config: &ModelConfig, mut all_layers_experts: Vec<Vec<PackedExpert>>) -> Result<Self> {
         let embed = candle_nn::embedding(config.vocab_size, config.hidden_size, vb.pp("embed"))?;
         let norm = candle_nn::layer_norm(config.hidden_size, 1e-5, vb.pp("norm"))?;
         let lm_head = candle_nn::linear(config.hidden_size, config.vocab_size, vb.pp("lm_head"))?;
@@ -112,7 +112,7 @@ impl DeepSeekCoderV2 {
         let mut layers = Vec::with_capacity(config.num_layers);
         for i in 0..config.num_layers {
             let layer_vb = vb.pp(format!("layers.{}", i));
-            let layer_experts = all_layers_experts[i].clone();
+            let layer_experts = all_layers_experts.remove(0);
             layers.push(DecoderLayer::new(layer_vb, config, layer_experts)?);
         }
 
