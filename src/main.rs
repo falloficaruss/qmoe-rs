@@ -4,6 +4,7 @@ pub mod moe;
 pub mod model;
 pub mod simd;
 pub mod tensor;
+pub mod loader;
 
 use anyhow::Result;
 use clap::Parser;
@@ -43,55 +44,64 @@ fn main() -> Result<()> {
         .map_err(|e| anyhow::anyhow!("Failed to load tokenizer: {}", e))?;
 
     let device = Device::Cpu;
-    let config = model::ModelConfig {
-        vocab_size: 1000,
-        hidden_size: 64,
-        num_layers: 1,
-        moe: moe::MoEConfig {
-            num_experts: 4,
-            top_k: 1,
-            hidden_dim: 64,
-            intermediate_dim: 128,
-        },
-    };
 
-    // 1. Create a dummy VarMap to bind standard weights
-    let varmap = candle_nn::VarMap::new();
-    let vb = VarBuilder::from_varmap(&varmap, candle_core::DType::F32, &device);
+    let (model, _config) = if let Some(ref model_path) = args.model {
+        tracing::info!("Loading real model from {}...", model_path);
+        loader::load_model_from_safetensors(model_path, None, &device)?
+    } else {
+        tracing::info!("No --model path provided. Using fallback mock model initialization...");
 
-    // 2. Generate dummy packed experts.
-    tracing::info!("Mocking sub-1-bit packed experts in workspace...");
-    let mut all_layers_experts = Vec::new();
-    for l in 0..config.num_layers {
-        let mut layer_experts = Vec::new();
-        for e in 0..config.moe.num_experts {
-            let gate_bytes = vec![0b01010101; (config.moe.intermediate_dim * config.hidden_size) / 4];
-            let up_bytes = vec![0b01010101; (config.moe.intermediate_dim * config.hidden_size) / 4];
-            let down_bytes = vec![0b01010101; (config.hidden_size * config.moe.intermediate_dim) / 4];
+        let config = model::ModelConfig {
+            vocab_size: 102400,
+            hidden_size: 64,
+            num_layers: 1,
+            moe: moe::MoEConfig {
+                num_experts: 4,
+                top_k: 1,
+                hidden_dim: 64,
+                intermediate_dim: 128,
+            },
+        };
 
-            let scales = Tensor::ones((config.moe.intermediate_dim,), candle_core::DType::F32, &device)?;
-            let down_scales = Tensor::ones((config.hidden_size,), candle_core::DType::F32, &device)?;
+        // 1. Create a dummy VarMap to bind standard weights
+        let varmap = candle_nn::VarMap::new();
+        let vb = VarBuilder::from_varmap(&varmap, candle_core::DType::F32, &device);
 
-            let gate_path = std::env::temp_dir().join(format!("gate_l{}_e{}.bin", l, e));
-            let up_path = std::env::temp_dir().join(format!("up_l{}_e{}.bin", l, e));
-            let down_path = std::env::temp_dir().join(format!("down_l{}_e{}.bin", l, e));
+        // 2. Generate dummy packed experts.
+        tracing::info!("Mocking sub-1-bit packed experts in workspace...");
+        let mut all_layers_experts = Vec::new();
+        for l in 0..config.num_layers {
+            let mut layer_experts = Vec::new();
+            for e in 0..config.moe.num_experts {
+                let gate_bytes = vec![0b01010101; (config.moe.intermediate_dim * config.hidden_size) / 4];
+                let up_bytes = vec![0b01010101; (config.moe.intermediate_dim * config.hidden_size) / 4];
+                let down_bytes = vec![0b01010101; (config.hidden_size * config.moe.intermediate_dim) / 4];
 
-            std::fs::write(&gate_path, &gate_bytes)?;
-            std::fs::write(&up_path, &up_bytes)?;
-            std::fs::write(&down_path, &down_bytes)?;
+                let scales = Tensor::ones((config.moe.intermediate_dim,), candle_core::DType::F32, &device)?;
+                let down_scales = Tensor::ones((config.hidden_size,), candle_core::DType::F32, &device)?;
 
-            let gate_proj = tensor::PackedQMoETensor::mmap_from_file(&gate_path, (config.moe.intermediate_dim, config.hidden_size), scales.clone())?;
-            let up_proj = tensor::PackedQMoETensor::mmap_from_file(&up_path, (config.moe.intermediate_dim, config.hidden_size), scales)?;
-            let down_proj = tensor::PackedQMoETensor::mmap_from_file(&down_path, (config.hidden_size, config.moe.intermediate_dim), down_scales)?;
+                let gate_path = std::env::temp_dir().join(format!("gate_l{}_e{}.bin", l, e));
+                let up_path = std::env::temp_dir().join(format!("up_l{}_e{}.bin", l, e));
+                let down_path = std::env::temp_dir().join(format!("down_l{}_e{}.bin", l, e));
 
-            layer_experts.push(moe::PackedExpert { gate_proj, up_proj, down_proj });
+                std::fs::write(&gate_path, &gate_bytes)?;
+                std::fs::write(&up_path, &up_bytes)?;
+                std::fs::write(&down_path, &down_bytes)?;
+
+                let gate_proj = tensor::PackedQMoETensor::mmap_from_file(&gate_path, (config.moe.intermediate_dim, config.hidden_size), scales.clone())?;
+                let up_proj = tensor::PackedQMoETensor::mmap_from_file(&up_path, (config.moe.intermediate_dim, config.hidden_size), scales)?;
+                let down_proj = tensor::PackedQMoETensor::mmap_from_file(&down_path, (config.hidden_size, config.moe.intermediate_dim), down_scales)?;
+
+                layer_experts.push(moe::PackedExpert { gate_proj, up_proj, down_proj });
+            }
+            all_layers_experts.push(layer_experts);
         }
-        all_layers_experts.push(layer_experts);
-    }
 
-    // 3. Initialize DeepSeek-Coder-V2 scaffold
-    tracing::info!("Initializing DeepSeek-Coder-V2 scaffold...");
-    let model = model::DeepSeekCoderV2::new(vb, &config, all_layers_experts)?;
+        // 3. Initialize DeepSeek-Coder-V2 scaffold
+        tracing::info!("Initializing DeepSeek-Coder-V2 scaffold...");
+        let model = model::DeepSeekCoderV2::new(vb, &config, all_layers_experts)?;
+        (model, config)
+    };
 
     // 4. Tokenize the prompt
     tracing::info!("Tokenizing prompt...");
