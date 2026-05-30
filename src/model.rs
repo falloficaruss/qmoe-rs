@@ -76,6 +76,15 @@ impl AttentionScaffold {
         let scores = q.matmul(&k.transpose(2, 3)?)?;
         let scale = 1.0 / (self.head_dim as f64).sqrt();
         let scores = (scores * scale)?;
+
+        let causal_mask = {
+            let r = Tensor::arange(0u32, seq_len as u32, &xs.device())?;
+            r.unsqueeze(1)?.lt(&r.unsqueeze(0)?)?
+                .to_dtype(candle_core::DType::F32)?
+                .broadcast_as(scores.shape())?
+        };
+        let scores = (scores + (causal_mask * (-1e18f64))?)?;
+
         let attn_weights = candle_nn::ops::softmax(&scores, 3)?;
 
         let context = attn_weights.matmul(&v)?;
