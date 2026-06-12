@@ -129,6 +129,8 @@ impl AttentionScaffold {
 pub struct DecoderLayer {
     pub attn: AttentionScaffold,
     pub moe: QMoELayer,
+    pub input_layernorm: candle_nn::LayerNorm,
+    pub post_attention_layernorm: candle_nn::LayerNorm,
 }
 
 impl DecoderLayer {
@@ -142,33 +144,44 @@ impl DecoderLayer {
 
         let moe = QMoELayer::new(config.moe.clone(), gate_weight, experts);
 
-        Ok(Self { attn, moe })
+        let input_layernorm = candle_nn::layer_norm(config.hidden_size, 1e-5, vb.pp("input_layernorm"))?;
+        let post_attention_layernorm = candle_nn::layer_norm(config.hidden_size, 1e-5, vb.pp("post_attention_layernorm"))?;
+
+        Ok(Self { attn, moe, input_layernorm, post_attention_layernorm })
     }
 
     /// Prefill mode – processes the full token sequence and returns a KV cache.
     pub fn forward_prefill(&self, xs: &Tensor) -> Result<(Tensor, KVCache)> {
-        let (attn_out, cache) = self.attn.forward_prefill(xs)?;
-        let xs = (xs + attn_out)?;
+        let residual = xs;
+        let xs = self.input_layernorm.forward(xs)?;
+        let (attn_out, cache) = self.attn.forward_prefill(&xs)?;
+        let xs = (residual + attn_out)?;
 
+        let residual = &xs;
+        let xs = self.post_attention_layernorm.forward(&xs)?;
         let (b_sz, seq_len, hidden_dim) = xs.dims3()?;
         let flattened_xs = xs.reshape((b_sz * seq_len, hidden_dim))?;
         let moe_out = self.moe.forward(&flattened_xs)?;
         let moe_out = moe_out.reshape((b_sz, seq_len, hidden_dim))?;
 
-        Ok(((xs + moe_out)?, cache))
+        Ok(((residual + moe_out)?, cache))
     }
 
     /// Incremental decode mode – processes one new token using an existing KV cache.
     pub fn forward_with_cache(&self, xs: &Tensor, cache: &mut KVCache) -> Result<Tensor> {
-        let attn_out = self.attn.forward_with_cache(xs, cache)?;
-        let xs = (xs + attn_out)?;
+        let residual = xs;
+        let xs = self.input_layernorm.forward(xs)?;
+        let attn_out = self.attn.forward_with_cache(&xs, cache)?;
+        let xs = (residual + attn_out)?;
 
+        let residual = &xs;
+        let xs = self.post_attention_layernorm.forward(&xs)?;
         let (b_sz, seq_len, hidden_dim) = xs.dims3()?;
         let flattened_xs = xs.reshape((b_sz * seq_len, hidden_dim))?;
         let moe_out = self.moe.forward(&flattened_xs)?;
         let moe_out = moe_out.reshape((b_sz, seq_len, hidden_dim))?;
 
-        Ok((xs + moe_out)?)
+        Ok((residual + moe_out)?)
     }
 }
 

@@ -45,20 +45,45 @@ def main():
         print("No valid input file provided. Generating mock DeepSeek-Coder-V2 weights for demonstration...")
         
         # DeepSeek-Coder-V2 layer dimension setup (simplified)
+        num_layers = 2
         num_experts = 4
         hidden_dim = 64
         intermediate_dim = 128
+        vocab_size = 102400
         
         state_dict = {}
         
-        # Gating network
-        state_dict["moe.gate.weight"] = torch.randn(num_experts, hidden_dim)
+        # Embedding
+        state_dict["embed.weight"] = torch.randn(vocab_size, hidden_dim)
         
-        # Populate mock expert projections
-        for e in range(num_experts):
-            state_dict[f"layers.0.moe.experts.{e}.gate_proj.weight"] = torch.randn(intermediate_dim, hidden_dim)
-            state_dict[f"layers.0.moe.experts.{e}.up_proj.weight"] = torch.randn(intermediate_dim, hidden_dim)
-            state_dict[f"layers.0.moe.experts.{e}.down_proj.weight"] = torch.randn(hidden_dim, intermediate_dim)
+        # Final layer norm
+        state_dict["norm.weight"] = torch.randn(hidden_dim)
+        state_dict["norm.bias"] = torch.randn(hidden_dim)
+        
+        # LM head
+        state_dict["lm_head.weight"] = torch.randn(vocab_size, hidden_dim)
+        
+        for l in range(num_layers):
+            # Gating network
+            state_dict[f"layers.{l}.moe.gate.weight"] = torch.randn(num_experts, hidden_dim)
+            
+            # Attention projections
+            state_dict[f"layers.{l}.self_attn.q_proj.weight"] = torch.randn(hidden_dim, hidden_dim)
+            state_dict[f"layers.{l}.self_attn.k_proj.weight"] = torch.randn(hidden_dim, hidden_dim)
+            state_dict[f"layers.{l}.self_attn.v_proj.weight"] = torch.randn(hidden_dim, hidden_dim)
+            state_dict[f"layers.{l}.self_attn.o_proj.weight"] = torch.randn(hidden_dim, hidden_dim)
+            
+            # Layer norms
+            state_dict[f"layers.{l}.input_layernorm.weight"] = torch.randn(hidden_dim)
+            state_dict[f"layers.{l}.input_layernorm.bias"] = torch.randn(hidden_dim)
+            state_dict[f"layers.{l}.post_attention_layernorm.weight"] = torch.randn(hidden_dim)
+            state_dict[f"layers.{l}.post_attention_layernorm.bias"] = torch.randn(hidden_dim)
+            
+            # Populate mock expert projections
+            for e in range(num_experts):
+                state_dict[f"layers.{l}.moe.experts.{e}.gate_proj.weight"] = torch.randn(intermediate_dim, hidden_dim)
+                state_dict[f"layers.{l}.moe.experts.{e}.up_proj.weight"] = torch.randn(intermediate_dim, hidden_dim)
+                state_dict[f"layers.{l}.moe.experts.{e}.down_proj.weight"] = torch.randn(hidden_dim, intermediate_dim)
     else:
         print(f"Loading weights from {args.input}...")
         state_dict = torch.load(args.input)
