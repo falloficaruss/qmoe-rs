@@ -1,16 +1,10 @@
-#![feature(portable_simd)]
-
-pub mod moe;
-pub mod model;
-pub mod simd;
-pub mod tensor;
-pub mod loader;
-
 use anyhow::Result;
 use clap::Parser;
 use candle_core::{Device, Tensor};
 use candle_nn::VarBuilder;
 use tokenizers::Tokenizer;
+
+use qmoe_engine::{loader, moe, model, tensor};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -61,6 +55,7 @@ fn main() -> Result<()> {
                 hidden_dim: 64,
                 intermediate_dim: 128,
             },
+            ..Default::default()
         };
 
         // 1. Create a dummy VarMap to bind standard weights
@@ -99,7 +94,8 @@ fn main() -> Result<()> {
 
         // 3. Initialize DeepSeek-Coder-V2 scaffold
         tracing::info!("Initializing DeepSeek-Coder-V2 scaffold...");
-        let model = model::DeepSeekCoderV2::new(vb, &config, all_layers_experts)?;
+        let all_layers_shared: Vec<Option<model::SharedExpert>> = (0..config.num_layers).map(|_| None).collect();
+        let model = model::DeepSeekCoderV2::new(vb, &config, all_layers_experts, all_layers_shared)?;
         (model, config)
     };
 

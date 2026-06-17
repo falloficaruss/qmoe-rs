@@ -42,6 +42,11 @@ impl QMoELayer {
         let (seq_len, hidden_dim) = xs.dims2()?;
         let device = xs.device();
 
+        // No routed experts (e.g. layer 0 with flattened weights) — skip
+        if self.experts.is_empty() {
+            return Ok(Tensor::zeros((seq_len, hidden_dim), xs.dtype(), device)?);
+        }
+
         // 1. Gate logits: [seq_len, num_experts]
         let gate_logits = xs.matmul(&self.gate_weight.t()?)?;
         

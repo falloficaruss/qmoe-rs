@@ -63,35 +63,34 @@ impl PackedQMoETensor {
     /// This is where the core SIMD unpacking logic will reside.
     pub fn forward_simd(&self, x: &Tensor) -> Result<Tensor> {
         let (out_features, in_features) = self.shape;
-        
-        // We assume `x` is a 1D tensor for this basic GEMV
-        let x_vec = x.flatten_all()?.to_vec1::<f32>()?;
-        if x_vec.len() != in_features {
-            anyhow::bail!("Input tensor size {} does not match in_features {}", x_vec.len(), in_features);
+        let x_dims = x.dims();
+        let batch_size: usize = x_dims.iter().product::<usize>() / in_features;
+        if batch_size * in_features != x_dims.iter().product::<usize>() {
+            anyhow::bail!("Input tensor size {} does not match batch_size * in_features = {} * {}", x_dims.iter().product::<usize>(), batch_size, in_features);
         }
         
+        let x_flat = x.flatten_all()?.to_vec1::<f32>()?;
         let scales_vec = self.scales.flatten_all()?.to_vec1::<f32>()?;
-        
-        let mut out_data = Vec::with_capacity(out_features);
-        
-        // The packed data is continuous. Each output feature row corresponds to a chunk of packed weights.
-        // Assuming 4 weights per byte, each row is in_features / 4 bytes long.
         let bytes_per_row = in_features / 4;
-        
         let raw = self.raw_data();
-        for i in 0..out_features {
-            let start = i * bytes_per_row;
-            let end = start + bytes_per_row;
-            let row_packed = &raw[start..end];
-            let scale = scales_vec[i];
-            
-            // Call the highly optimized SIMD kernel
-            let dot = crate::simd::fused_dequantize_and_dot(row_packed, &x_vec, scale);
-            out_data.push(dot);
+        
+        let mut out_data = Vec::with_capacity(out_features * batch_size);
+        
+        for b in 0..batch_size {
+            let x_vec = &x_flat[b * in_features..(b + 1) * in_features];
+            for i in 0..out_features {
+                let start = i * bytes_per_row;
+                let end = start + bytes_per_row;
+                let row_packed = &raw[start..end];
+                let scale = scales_vec[i];
+                let dot = crate::simd::fused_dequantize_and_dot(row_packed, x_vec, scale);
+                out_data.push(dot);
+            }
         }
         
-        // Create the final output tensor
-        let out_tensor = Tensor::from_vec(out_data, out_features, &Device::Cpu)?;
+        let mut out_shape: Vec<usize> = x_dims.to_vec();
+        *out_shape.last_mut().unwrap() = out_features;
+        let out_tensor = Tensor::from_vec(out_data, out_shape, &Device::Cpu)?;
         Ok(out_tensor)
     }
 }

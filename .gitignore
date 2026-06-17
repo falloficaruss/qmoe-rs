@@ -1,3 +1,5 @@
 /target
 /resources
 *.safetensors
+.ipynb_checkpoints/
+/eval_artifacts
