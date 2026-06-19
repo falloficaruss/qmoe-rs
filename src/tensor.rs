@@ -93,4 +93,30 @@ impl PackedQMoETensor {
         let out_tensor = Tensor::from_vec(out_data, out_shape, &Device::Cpu)?;
         Ok(out_tensor)
     }
+
+    /// Raw &[f32] path — bypasses Tensor construction overhead.
+    /// Used for benchmarking the input-source overhead.
+    pub fn forward_simd_raw(&self, x: &[f32]) -> Vec<f32> {
+        let (out_features, in_features) = self.shape;
+        let batch_size = x.len() / in_features;
+        let scales_vec = self.scales.flatten_all().unwrap().to_vec1::<f32>().unwrap();
+        let bytes_per_row = in_features / 4;
+        let raw = self.raw_data();
+
+        let mut out_data = Vec::with_capacity(out_features * batch_size);
+
+        for b in 0..batch_size {
+            let x_vec = &x[b * in_features..(b + 1) * in_features];
+            for i in 0..out_features {
+                let start = i * bytes_per_row;
+                let end = start + bytes_per_row;
+                let row_packed = &raw[start..end];
+                let scale = scales_vec[i];
+                let dot = crate::simd::fused_dequantize_and_dot(row_packed, x_vec, scale);
+                out_data.push(dot);
+            }
+        }
+
+        out_data
+    }
 }

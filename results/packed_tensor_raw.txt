@@ -1,0 +1,697 @@
+    Finished `bench` profile [optimized] target(s) in 0.21s
+     Running benches/packed_tensor.rs (target/release/deps/packed_tensor-8a0873a6679c3a86)
+Gnuplot not found, using plotters backend
+Benchmarking packed_tensor/forward_owned/owned/1x1408
+Benchmarking packed_tensor/forward_owned/owned/1x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_owned/owned/1x1408: Collecting 50 samples in estimated 2.0016 s (768k iterations)
+Benchmarking packed_tensor/forward_owned/owned/1x1408: Analyzing
+packed_tensor/forward_owned/owned/1x1408
+                        time:   [1.8947 µs 1.9680 µs 2.0444 µs]
+                        thrpt:  [164.21 MiB/s 170.58 MiB/s 177.17 MiB/s]
+                 change:
+                        time:   [+1.2449% +14.225% +30.938%] (p = 0.03 < 0.05)
+                        thrpt:  [-23.628% -12.454% -1.2296%]
+                        Performance has regressed.
+Found 5 outliers among 50 measurements (10.00%)
+  4 (8.00%) high mild
+  1 (2.00%) high severe
+Benchmarking packed_tensor/forward_owned/owned/64x1408
+Benchmarking packed_tensor/forward_owned/owned/64x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_owned/owned/64x1408: Collecting 50 samples in estimated 2.0534 s (24k iterations)
+Benchmarking packed_tensor/forward_owned/owned/64x1408: Analyzing
+packed_tensor/forward_owned/owned/64x1408
+                        time:   [78.486 µs 79.914 µs 81.527 µs]
+                        thrpt:  [263.52 MiB/s 268.84 MiB/s 273.74 MiB/s]
+Found 5 outliers among 50 measurements (10.00%)
+  2 (4.00%) high mild
+  3 (6.00%) high severe
+Benchmarking packed_tensor/forward_owned/owned/256x1408
+Benchmarking packed_tensor/forward_owned/owned/256x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_owned/owned/256x1408: Collecting 50 samples in estimated 2.3177 s (6375 iterations)
+Benchmarking packed_tensor/forward_owned/owned/256x1408: Analyzing
+packed_tensor/forward_owned/owned/256x1408
+                        time:   [323.77 µs 333.62 µs 343.73 µs]
+                        thrpt:  [250.01 MiB/s 257.59 MiB/s 265.43 MiB/s]
+Benchmarking packed_tensor/forward_owned/owned/1408x1408
+Benchmarking packed_tensor/forward_owned/owned/1408x1408: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 2.5s, enable flat sampling, or reduce sample count to 30.
+Benchmarking packed_tensor/forward_owned/owned/1408x1408: Collecting 50 samples in estimated 2.5318 s (1275 iterations)
+Benchmarking packed_tensor/forward_owned/owned/1408x1408: Analyzing
+packed_tensor/forward_owned/owned/1408x1408
+                        time:   [1.7959 ms 1.8392 ms 1.8861 ms]
+                        thrpt:  [250.60 MiB/s 256.99 MiB/s 263.18 MiB/s]
+Found 3 outliers among 50 measurements (6.00%)
+  3 (6.00%) high mild
+Benchmarking packed_tensor/forward_owned/owned/2048x1408
+Benchmarking packed_tensor/forward_owned/owned/2048x1408: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 3.2s, enable flat sampling, or reduce sample count to 20.
+Benchmarking packed_tensor/forward_owned/owned/2048x1408: Collecting 50 samples in estimated 3.1986 s (1275 iterations)
+Benchmarking packed_tensor/forward_owned/owned/2048x1408: Analyzing
+packed_tensor/forward_owned/owned/2048x1408
+                        time:   [2.5839 ms 2.7500 ms 2.9273 ms]
+                        thrpt:  [234.86 MiB/s 250.00 MiB/s 266.07 MiB/s]
+Found 6 outliers among 50 measurements (12.00%)
+  4 (8.00%) high mild
+  2 (4.00%) high severe
+Benchmarking packed_tensor/forward_owned/owned/1x2048
+Benchmarking packed_tensor/forward_owned/owned/1x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_owned/owned/1x2048: Collecting 50 samples in estimated 2.0031 s (747k iterations)
+Benchmarking packed_tensor/forward_owned/owned/1x2048: Analyzing
+packed_tensor/forward_owned/owned/1x2048
+                        time:   [2.4446 µs 2.5016 µs 2.5672 µs]
+                        thrpt:  [190.20 MiB/s 195.19 MiB/s 199.74 MiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  2 (4.00%) high mild
+  2 (4.00%) high severe
+Benchmarking packed_tensor/forward_owned/owned/64x2048
+Benchmarking packed_tensor/forward_owned/owned/64x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_owned/owned/64x2048: Collecting 50 samples in estimated 2.0145 s (17k iterations)
+Benchmarking packed_tensor/forward_owned/owned/64x2048: Analyzing
+packed_tensor/forward_owned/owned/64x2048
+                        time:   [116.97 µs 119.80 µs 122.67 µs]
+                        thrpt:  [254.74 MiB/s 260.84 MiB/s 267.16 MiB/s]
+Found 5 outliers among 50 measurements (10.00%)
+  2 (4.00%) high mild
+  3 (6.00%) high severe
+Benchmarking packed_tensor/forward_owned/owned/256x2048
+Benchmarking packed_tensor/forward_owned/owned/256x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_owned/owned/256x2048: Collecting 50 samples in estimated 2.5617 s (5100 iterations)
+Benchmarking packed_tensor/forward_owned/owned/256x2048: Analyzing
+packed_tensor/forward_owned/owned/256x2048
+                        time:   [460.69 µs 471.03 µs 483.29 µs]
+                        thrpt:  [258.64 MiB/s 265.37 MiB/s 271.33 MiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  2 (4.00%) high mild
+  2 (4.00%) high severe
+Benchmarking packed_tensor/forward_owned/owned/1408x2048
+Benchmarking packed_tensor/forward_owned/owned/1408x2048: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 3.5s, enable flat sampling, or reduce sample count to 20.
+Benchmarking packed_tensor/forward_owned/owned/1408x2048: Collecting 50 samples in estimated 3.5298 s (1275 iterations)
+Benchmarking packed_tensor/forward_owned/owned/1408x2048: Analyzing
+packed_tensor/forward_owned/owned/1408x2048
+                        time:   [2.6259 ms 2.6767 ms 2.7344 ms]
+                        thrpt:  [251.43 MiB/s 256.85 MiB/s 261.82 MiB/s]
+Found 3 outliers among 50 measurements (6.00%)
+  1 (2.00%) high mild
+  2 (4.00%) high severe
+Benchmarking packed_tensor/forward_owned/owned/2048x2048
+Benchmarking packed_tensor/forward_owned/owned/2048x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_owned/owned/2048x2048: Collecting 50 samples in estimated 2.0220 s (350 iterations)
+Benchmarking packed_tensor/forward_owned/owned/2048x2048: Analyzing
+packed_tensor/forward_owned/owned/2048x2048
+                        time:   [4.1496 ms 4.3927 ms 4.6505 ms]
+                        thrpt:  [215.03 MiB/s 227.65 MiB/s 240.99 MiB/s]
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high mild
+
+Benchmarking packed_tensor/forward_mmap/mmap/1x1408
+Benchmarking packed_tensor/forward_mmap/mmap/1x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_mmap/mmap/1x1408: Collecting 50 samples in estimated 2.0025 s (928k iterations)
+Benchmarking packed_tensor/forward_mmap/mmap/1x1408: Analyzing
+packed_tensor/forward_mmap/mmap/1x1408
+                        time:   [1.9908 µs 2.0462 µs 2.1033 µs]
+                        thrpt:  [159.60 MiB/s 164.06 MiB/s 168.63 MiB/s]
+                 change:
+                        time:   [-6.5207% -1.1228% +4.3844%] (p = 0.70 > 0.05)
+                        thrpt:  [-4.2002% +1.1355% +6.9756%]
+                        No change in performance detected.
+Found 2 outliers among 50 measurements (4.00%)
+  1 (2.00%) high mild
+  1 (2.00%) high severe
+Benchmarking packed_tensor/forward_mmap/mmap/64x1408
+Benchmarking packed_tensor/forward_mmap/mmap/64x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_mmap/mmap/64x1408: Collecting 50 samples in estimated 2.0545 s (23k iterations)
+Benchmarking packed_tensor/forward_mmap/mmap/64x1408: Analyzing
+packed_tensor/forward_mmap/mmap/64x1408
+                        time:   [82.159 µs 84.556 µs 87.168 µs]
+                        thrpt:  [246.47 MiB/s 254.09 MiB/s 261.50 MiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  3 (6.00%) high mild
+  1 (2.00%) high severe
+Benchmarking packed_tensor/forward_mmap/mmap/256x1408
+Benchmarking packed_tensor/forward_mmap/mmap/256x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_mmap/mmap/256x1408: Collecting 50 samples in estimated 2.2134 s (6375 iterations)
+Benchmarking packed_tensor/forward_mmap/mmap/256x1408: Analyzing
+packed_tensor/forward_mmap/mmap/256x1408
+                        time:   [320.75 µs 330.23 µs 341.58 µs]
+                        thrpt:  [251.59 MiB/s 260.24 MiB/s 267.93 MiB/s]
+Found 6 outliers among 50 measurements (12.00%)
+  3 (6.00%) high mild
+  3 (6.00%) high severe
+Benchmarking packed_tensor/forward_mmap/mmap/1408x1408
+Benchmarking packed_tensor/forward_mmap/mmap/1408x1408: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 2.4s, enable flat sampling, or reduce sample count to 30.
+Benchmarking packed_tensor/forward_mmap/mmap/1408x1408: Collecting 50 samples in estimated 2.4064 s (1275 iterations)
+Benchmarking packed_tensor/forward_mmap/mmap/1408x1408: Analyzing
+packed_tensor/forward_mmap/mmap/1408x1408
+                        time:   [1.9399 ms 2.0329 ms 2.1364 ms]
+                        thrpt:  [221.23 MiB/s 232.50 MiB/s 243.66 MiB/s]
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high mild
+Benchmarking packed_tensor/forward_mmap/mmap/2048x1408
+Benchmarking packed_tensor/forward_mmap/mmap/2048x1408: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 3.8s, enable flat sampling, or reduce sample count to 20.
+Benchmarking packed_tensor/forward_mmap/mmap/2048x1408: Collecting 50 samples in estimated 3.8217 s (1275 iterations)
+Benchmarking packed_tensor/forward_mmap/mmap/2048x1408: Analyzing
+packed_tensor/forward_mmap/mmap/2048x1408
+                        time:   [2.6850 ms 2.7846 ms 2.8891 ms]
+                        thrpt:  [237.97 MiB/s 246.89 MiB/s 256.05 MiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  4 (8.00%) high mild
+Benchmarking packed_tensor/forward_mmap/mmap/1x2048
+Benchmarking packed_tensor/forward_mmap/mmap/1x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_mmap/mmap/1x2048: Collecting 50 samples in estimated 2.0004 s (743k iterations)
+Benchmarking packed_tensor/forward_mmap/mmap/1x2048: Analyzing
+packed_tensor/forward_mmap/mmap/1x2048
+                        time:   [2.6186 µs 2.7268 µs 2.8448 µs]
+                        thrpt:  [171.64 MiB/s 179.07 MiB/s 186.46 MiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  4 (8.00%) high mild
+Benchmarking packed_tensor/forward_mmap/mmap/64x2048
+Benchmarking packed_tensor/forward_mmap/mmap/64x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_mmap/mmap/64x2048: Collecting 50 samples in estimated 2.1285 s (17k iterations)
+Benchmarking packed_tensor/forward_mmap/mmap/64x2048: Analyzing
+packed_tensor/forward_mmap/mmap/64x2048
+                        time:   [129.49 µs 134.85 µs 140.23 µs]
+                        thrpt:  [222.84 MiB/s 231.73 MiB/s 241.33 MiB/s]
+Found 2 outliers among 50 measurements (4.00%)
+  2 (4.00%) high mild
+Benchmarking packed_tensor/forward_mmap/mmap/256x2048
+Benchmarking packed_tensor/forward_mmap/mmap/256x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_mmap/mmap/256x2048: Collecting 50 samples in estimated 2.5901 s (5100 iterations)
+Benchmarking packed_tensor/forward_mmap/mmap/256x2048: Analyzing
+packed_tensor/forward_mmap/mmap/256x2048
+                        time:   [513.64 µs 528.92 µs 545.09 µs]
+                        thrpt:  [229.32 MiB/s 236.33 MiB/s 243.36 MiB/s]
+Found 6 outliers among 50 measurements (12.00%)
+  6 (12.00%) high mild
+Benchmarking packed_tensor/forward_mmap/mmap/1408x2048
+Benchmarking packed_tensor/forward_mmap/mmap/1408x2048: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 3.8s, enable flat sampling, or reduce sample count to 20.
+Benchmarking packed_tensor/forward_mmap/mmap/1408x2048: Collecting 50 samples in estimated 3.8148 s (1275 iterations)
+Benchmarking packed_tensor/forward_mmap/mmap/1408x2048: Analyzing
+packed_tensor/forward_mmap/mmap/1408x2048
+                        time:   [2.8558 ms 2.9381 ms 3.0188 ms]
+                        thrpt:  [227.74 MiB/s 234.00 MiB/s 240.74 MiB/s]
+Found 3 outliers among 50 measurements (6.00%)
+  3 (6.00%) high mild
+Benchmarking packed_tensor/forward_mmap/mmap/2048x2048
+Benchmarking packed_tensor/forward_mmap/mmap/2048x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/forward_mmap/mmap/2048x2048: Collecting 50 samples in estimated 2.0745 s (500 iterations)
+Benchmarking packed_tensor/forward_mmap/mmap/2048x2048: Analyzing
+packed_tensor/forward_mmap/mmap/2048x2048
+                        time:   [4.2215 ms 4.3823 ms 4.5538 ms]
+                        thrpt:  [219.60 MiB/s 228.19 MiB/s 236.88 MiB/s]
+
+Benchmarking packed_tensor/input_source/tensor_input/64x1408
+Benchmarking packed_tensor/input_source/tensor_input/64x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/input_source/tensor_input/64x1408: Collecting 50 samples in estimated 2.0880 s (23k iterations)
+Benchmarking packed_tensor/input_source/tensor_input/64x1408: Analyzing
+packed_tensor/input_source/tensor_input/64x1408
+                        time:   [92.402 µs 96.311 µs 100.50 µs]
+                        thrpt:  [213.78 MiB/s 223.07 MiB/s 232.51 MiB/s]
+                 change:
+                        time:   [-10.062% +1.0153% +11.753%] (p = 0.87 > 0.05)
+                        thrpt:  [-10.517% -1.0051% +11.187%]
+                        No change in performance detected.
+Benchmarking packed_tensor/input_source/raw_slice_input/64x1408
+Benchmarking packed_tensor/input_source/raw_slice_input/64x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/input_source/raw_slice_input/64x1408: Collecting 50 samples in estimated 2.0430 s (20k iterations)
+Benchmarking packed_tensor/input_source/raw_slice_input/64x1408: Analyzing
+packed_tensor/input_source/raw_slice_input/64x1408
+                        time:   [88.603 µs 92.310 µs 96.416 µs]
+                        thrpt:  [222.83 MiB/s 232.74 MiB/s 242.48 MiB/s]
+Benchmarking packed_tensor/input_source/tensor_input/256x1408
+Benchmarking packed_tensor/input_source/tensor_input/256x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/input_source/tensor_input/256x1408: Collecting 50 samples in estimated 2.1729 s (7650 iterations)
+Benchmarking packed_tensor/input_source/tensor_input/256x1408: Analyzing
+packed_tensor/input_source/tensor_input/256x1408
+                        time:   [283.58 µs 285.39 µs 287.16 µs]
+                        thrpt:  [299.26 MiB/s 301.13 MiB/s 303.05 MiB/s]
+Found 6 outliers among 50 measurements (12.00%)
+  2 (4.00%) low mild
+  3 (6.00%) high mild
+  1 (2.00%) high severe
+Benchmarking packed_tensor/input_source/raw_slice_input/256x1408
+Benchmarking packed_tensor/input_source/raw_slice_input/256x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/input_source/raw_slice_input/256x1408: Collecting 50 samples in estimated 2.4185 s (6375 iterations)
+Benchmarking packed_tensor/input_source/raw_slice_input/256x1408: Analyzing
+packed_tensor/input_source/raw_slice_input/256x1408
+                        time:   [348.95 µs 357.86 µs 367.63 µs]
+                        thrpt:  [233.76 MiB/s 240.14 MiB/s 246.27 MiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  4 (8.00%) high mild
+Benchmarking packed_tensor/input_source/tensor_input/1408x1408
+Benchmarking packed_tensor/input_source/tensor_input/1408x1408: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 2.7s, enable flat sampling, or reduce sample count to 30.
+Benchmarking packed_tensor/input_source/tensor_input/1408x1408: Collecting 50 samples in estimated 2.6983 s (1275 iterations)
+Benchmarking packed_tensor/input_source/tensor_input/1408x1408: Analyzing
+packed_tensor/input_source/tensor_input/1408x1408
+                        time:   [2.0658 ms 2.1461 ms 2.2277 ms]
+                        thrpt:  [212.17 MiB/s 220.24 MiB/s 228.80 MiB/s]
+Benchmarking packed_tensor/input_source/raw_slice_input/1408x1408
+Benchmarking packed_tensor/input_source/raw_slice_input/1408x1408: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 2.7s, enable flat sampling, or reduce sample count to 30.
+Benchmarking packed_tensor/input_source/raw_slice_input/1408x1408: Collecting 50 samples in estimated 2.7205 s (1275 iterations)
+Benchmarking packed_tensor/input_source/raw_slice_input/1408x1408: Analyzing
+packed_tensor/input_source/raw_slice_input/1408x1408
+                        time:   [1.8672 ms 1.9269 ms 1.9935 ms]
+                        thrpt:  [237.10 MiB/s 245.30 MiB/s 253.14 MiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  3 (6.00%) high mild
+  1 (2.00%) high severe
+Benchmarking packed_tensor/input_source/tensor_input/64x2048
+Benchmarking packed_tensor/input_source/tensor_input/64x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/input_source/tensor_input/64x2048: Collecting 50 samples in estimated 2.1459 s (15k iterations)
+Benchmarking packed_tensor/input_source/tensor_input/64x2048: Analyzing
+packed_tensor/input_source/tensor_input/64x2048
+                        time:   [134.27 µs 140.61 µs 147.63 µs]
+                        thrpt:  [211.68 MiB/s 222.25 MiB/s 232.74 MiB/s]
+Found 2 outliers among 50 measurements (4.00%)
+  2 (4.00%) high mild
+Benchmarking packed_tensor/input_source/raw_slice_input/64x2048
+Benchmarking packed_tensor/input_source/raw_slice_input/64x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/input_source/raw_slice_input/64x2048: Collecting 50 samples in estimated 2.0396 s (18k iterations)
+Benchmarking packed_tensor/input_source/raw_slice_input/64x2048: Analyzing
+packed_tensor/input_source/raw_slice_input/64x2048
+                        time:   [112.98 µs 115.19 µs 117.37 µs]
+                        thrpt:  [266.26 MiB/s 271.29 MiB/s 276.61 MiB/s]
+Found 3 outliers among 50 measurements (6.00%)
+  3 (6.00%) high mild
+Benchmarking packed_tensor/input_source/tensor_input/256x2048
+Benchmarking packed_tensor/input_source/tensor_input/256x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/input_source/tensor_input/256x2048: Collecting 50 samples in estimated 2.3687 s (5100 iterations)
+Benchmarking packed_tensor/input_source/tensor_input/256x2048: Analyzing
+packed_tensor/input_source/tensor_input/256x2048
+                        time:   [451.70 µs 460.16 µs 469.36 µs]
+                        thrpt:  [266.32 MiB/s 271.64 MiB/s 276.73 MiB/s]
+Found 3 outliers among 50 measurements (6.00%)
+  3 (6.00%) high mild
+Benchmarking packed_tensor/input_source/raw_slice_input/256x2048
+Benchmarking packed_tensor/input_source/raw_slice_input/256x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/input_source/raw_slice_input/256x2048: Collecting 50 samples in estimated 2.3632 s (5100 iterations)
+Benchmarking packed_tensor/input_source/raw_slice_input/256x2048: Analyzing
+packed_tensor/input_source/raw_slice_input/256x2048
+                        time:   [448.18 µs 455.40 µs 463.33 µs]
+                        thrpt:  [269.78 MiB/s 274.48 MiB/s 278.90 MiB/s]
+Found 7 outliers among 50 measurements (14.00%)
+  5 (10.00%) high mild
+  2 (4.00%) high severe
+Benchmarking packed_tensor/input_source/tensor_input/1408x2048
+Benchmarking packed_tensor/input_source/tensor_input/1408x2048: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 3.5s, enable flat sampling, or reduce sample count to 20.
+Benchmarking packed_tensor/input_source/tensor_input/1408x2048: Collecting 50 samples in estimated 3.4904 s (1275 iterations)
+Benchmarking packed_tensor/input_source/tensor_input/1408x2048: Analyzing
+packed_tensor/input_source/tensor_input/1408x2048
+                        time:   [2.5565 ms 2.6088 ms 2.6667 ms]
+                        thrpt:  [257.81 MiB/s 263.53 MiB/s 268.92 MiB/s]
+Found 2 outliers among 50 measurements (4.00%)
+  2 (4.00%) high mild
+Benchmarking packed_tensor/input_source/raw_slice_input/1408x2048
+Benchmarking packed_tensor/input_source/raw_slice_input/1408x2048: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 3.2s, enable flat sampling, or reduce sample count to 20.
+Benchmarking packed_tensor/input_source/raw_slice_input/1408x2048: Collecting 50 samples in estimated 3.2384 s (1275 iterations)
+Benchmarking packed_tensor/input_source/raw_slice_input/1408x2048: Analyzing
+packed_tensor/input_source/raw_slice_input/1408x2048
+                        time:   [2.5959 ms 2.6525 ms 2.7061 ms]
+                        thrpt:  [254.05 MiB/s 259.19 MiB/s 264.84 MiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  3 (6.00%) high mild
+  1 (2.00%) high severe
+
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x1408
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x1408: Collecting 50 samples in estimated 2.0137 s (24k iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x1408: Analyzing
+packed_tensor/vs_fp16/packed_2bit/64x1408
+                        time:   [82.494 µs 84.702 µs 87.149 µs]
+                        thrpt:  [246.52 MiB/s 253.65 MiB/s 260.43 MiB/s]
+Found 3 outliers among 50 measurements (6.00%)
+  2 (4.00%) high mild
+  1 (2.00%) high severe
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x1408
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x1408: Collecting 50 samples in estimated 2.0018 s (142k iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x1408: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/64x1408
+                        time:   [13.680 µs 13.949 µs 14.231 µs]
+                        thrpt:  [1.4743 GiB/s 1.5041 GiB/s 1.5336 GiB/s]
+                 change:
+                        time:   [-0.7418% +2.8165% +6.3092%] (p = 0.11 > 0.05)
+                        thrpt:  [-5.9348% -2.7394% +0.7474%]
+                        No change in performance detected.
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x1408
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x1408: Collecting 50 samples in estimated 2.3214 s (6375 iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x1408: Analyzing
+packed_tensor/vs_fp16/packed_2bit/256x1408
+                        time:   [353.57 µs 374.40 µs 403.53 µs]
+                        thrpt:  [212.96 MiB/s 229.53 MiB/s 243.06 MiB/s]
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high mild
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x1408
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x1408: Collecting 50 samples in estimated 2.0212 s (38k iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x1408: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/256x1408
+                        time:   [50.079 µs 51.523 µs 53.366 µs]
+                        thrpt:  [1.5726 GiB/s 1.6288 GiB/s 1.6758 GiB/s]
+Found 7 outliers among 50 measurements (14.00%)
+  4 (8.00%) high mild
+  3 (6.00%) high severe
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x1408
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x1408: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 2.4s, enable flat sampling, or reduce sample count to 30.
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x1408: Collecting 50 samples in estimated 2.4157 s (1275 iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x1408: Analyzing
+packed_tensor/vs_fp16/packed_2bit/1408x1408
+                        time:   [1.7624 ms 1.8225 ms 1.8980 ms]
+                        thrpt:  [249.02 MiB/s 259.34 MiB/s 268.19 MiB/s]
+Found 6 outliers among 50 measurements (12.00%)
+  6 (12.00%) high mild
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x1408
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x1408: Collecting 50 samples in estimated 2.4434 s (6375 iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x1408: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/1408x1408
+                        time:   [354.60 µs 359.15 µs 363.65 µs]
+                        thrpt:  [1.2693 GiB/s 1.2852 GiB/s 1.3017 GiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  4 (8.00%) high mild
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x1408
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x1408: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 3.6s, enable flat sampling, or reduce sample count to 20.
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x1408: Collecting 50 samples in estimated 3.6143 s (1275 iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x1408: Analyzing
+packed_tensor/vs_fp16/packed_2bit/2048x1408
+                        time:   [2.6514 ms 2.7621 ms 2.9073 ms]
+                        thrpt:  [236.47 MiB/s 248.90 MiB/s 259.30 MiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  4 (8.00%) high mild
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x1408
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x1408: Collecting 50 samples in estimated 2.6908 s (3825 iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x1408: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/2048x1408
+                        time:   [675.73 µs 693.02 µs 712.00 µs]
+                        thrpt:  [965.59 MiB/s 992.04 MiB/s 1017.4 MiB/s]
+Found 6 outliers among 50 measurements (12.00%)
+  3 (6.00%) high mild
+  3 (6.00%) high severe
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x2048
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x2048: Collecting 50 samples in estimated 2.1949 s (13k iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x2048: Analyzing
+packed_tensor/vs_fp16/packed_2bit/64x2048
+                        time:   [125.09 µs 129.26 µs 134.10 µs]
+                        thrpt:  [233.03 MiB/s 241.76 MiB/s 249.82 MiB/s]
+Found 9 outliers among 50 measurements (18.00%)
+  7 (14.00%) high mild
+  2 (4.00%) high severe
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x2048
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x2048: Collecting 50 samples in estimated 2.0135 s (98k iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x2048: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/64x2048
+                        time:   [24.387 µs 25.406 µs 26.399 µs]
+                        thrpt:  [1.1560 GiB/s 1.2012 GiB/s 1.2514 GiB/s]
+Found 3 outliers among 50 measurements (6.00%)
+  1 (2.00%) low mild
+  2 (4.00%) high mild
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x2048
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x2048: Collecting 50 samples in estimated 2.2422 s (2550 iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x2048: Analyzing
+packed_tensor/vs_fp16/packed_2bit/256x2048
+                        time:   [647.22 µs 715.68 µs 815.21 µs]
+                        thrpt:  [153.34 MiB/s 174.66 MiB/s 193.13 MiB/s]
+Found 3 outliers among 50 measurements (6.00%)
+  2 (4.00%) high mild
+  1 (2.00%) high severe
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `bench` profile [optimized] target(s) in 1.23s
+     Running benches/packed_tensor.rs (target/release/deps/packed_tensor-8a0873a6679c3a86)
+Gnuplot not found, using plotters backend
+    Finished `bench` profile [optimized] target(s) in 0.70s
+     Running benches/packed_tensor.rs (target/release/deps/packed_tensor-8a0873a6679c3a86)
+Gnuplot not found, using plotters backend
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x1408
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/batch_scaling/batch/1
+Benchmarking packed_tensor/batch_scaling/batch/1: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x1408: Collecting 50 samples in estimated 2.0541 s (20k iterations)
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 2.9s, enable flat sampling, or reduce sample count to 20.
+Benchmarking packed_tensor/batch_scaling/batch/1: Collecting 50 samples in estimated 2.8832 s (1275 iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x1408: Analyzing
+packed_tensor/vs_fp16/packed_2bit/64x1408
+                        time:   [108.32 µs 114.10 µs 121.22 µs]
+                        thrpt:  [177.23 MiB/s 188.30 MiB/s 198.35 MiB/s]
+                 change:
+                        time:   [+29.242% +38.264% +47.406%] (p = 0.00 < 0.05)
+                        thrpt:  [-32.160% -27.675% -22.626%]
+                        Performance has regressed.
+Found 4 outliers among 50 measurements (8.00%)
+  3 (6.00%) high mild
+  1 (2.00%) high severe
+Benchmarking packed_tensor/batch_scaling/batch/1: Analyzing
+packed_tensor/batch_scaling/batch/1
+                        time:   [2.3556 ms 2.5185 ms 2.6601 ms]
+                        thrpt:  [529.30 Kelem/s 559.07 Kelem/s 597.73 Kelem/s]
+                 change:
+                        time:   [+25.641% +35.203% +44.735%] (p = 0.00 < 0.05)
+                        thrpt:  [-30.908% -26.037% -20.408%]
+                        Performance has regressed.
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high mild
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x1408
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/batch_scaling/batch/2
+Benchmarking packed_tensor/batch_scaling/batch/2: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x1408: Collecting 50 samples in estimated 2.0283 s (62k iterations)
+Benchmarking packed_tensor/batch_scaling/batch/2: Collecting 50 samples in estimated 2.2526 s (350 iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x1408: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/64x1408
+                        time:   [18.608 µs 20.333 µs 22.216 µs]
+                        thrpt:  [967.06 MiB/s 1.0319 GiB/s 1.1275 GiB/s]
+                 change:
+                        time:   [+30.141% +36.711% +43.329%] (p = 0.00 < 0.05)
+                        thrpt:  [-30.230% -26.853% -23.160%]
+                        Performance has regressed.
+Found 11 outliers among 50 measurements (22.00%)
+  1 (2.00%) low severe
+  3 (6.00%) low mild
+  1 (2.00%) high mild
+  6 (12.00%) high severe
+Benchmarking packed_tensor/batch_scaling/batch/2: Analyzing
+packed_tensor/batch_scaling/batch/2
+                        time:   [5.7198 ms 5.8539 ms 6.0117 ms]
+                        thrpt:  [468.42 Kelem/s 481.04 Kelem/s 492.33 Kelem/s]
+                 change:
+                        time:   [+49.307% +54.645% +60.219%] (p = 0.00 < 0.05)
+                        thrpt:  [-37.585% -35.336% -33.024%]
+                        Performance has regressed.
+Found 6 outliers among 50 measurements (12.00%)
+  1 (2.00%) low severe
+  3 (6.00%) high mild
+  2 (4.00%) high severe
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x1408
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x1408: Collecting 50 samples in estimated 2.4197 s (3825 iterations)
+Benchmarking packed_tensor/batch_scaling/batch/4
+Benchmarking packed_tensor/batch_scaling/batch/4: Warming up for 500.00 ms
+Benchmarking packed_tensor/batch_scaling/batch/4: Collecting 50 samples in estimated 2.0077 s (200 iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x1408: Analyzing
+packed_tensor/vs_fp16/packed_2bit/256x1408
+                        time:   [464.63 µs 500.50 µs 535.53 µs]
+                        thrpt:  [160.47 MiB/s 171.70 MiB/s 184.96 MiB/s]
+                 change:
+                        time:   [+19.450% +30.426% +42.543%] (p = 0.00 < 0.05)
+                        thrpt:  [-29.846% -23.328% -16.283%]
+                        Performance has regressed.
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high severe
+Benchmarking packed_tensor/batch_scaling/batch/4: Analyzing
+packed_tensor/batch_scaling/batch/4
+                        time:   [11.174 ms 11.479 ms 11.772 ms]
+                        thrpt:  [478.43 Kelem/s 490.65 Kelem/s 504.03 Kelem/s]
+                 change:
+                        time:   [+37.791% +44.439% +50.927%] (p = 0.00 < 0.05)
+                        thrpt:  [-33.743% -30.767% -27.426%]
+                        Performance has regressed.
+Found 3 outliers among 50 measurements (6.00%)
+  2 (4.00%) low mild
+  1 (2.00%) high mild
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x1408
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/batch_scaling/batch/8
+Benchmarking packed_tensor/batch_scaling/batch/8: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x1408: Collecting 50 samples in estimated 2.0810 s (31k iterations)
+Benchmarking packed_tensor/batch_scaling/batch/8: Collecting 50 samples in estimated 2.2056 s (100 iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x1408: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/256x1408
+                        time:   [56.809 µs 58.420 µs 59.884 µs]
+                        thrpt:  [1.4014 GiB/s 1.4365 GiB/s 1.4773 GiB/s]
+                 change:
+                        time:   [+4.5448% +11.386% +18.625%] (p = 0.00 < 0.05)
+                        thrpt:  [-15.701% -10.222% -4.3472%]
+                        Performance has regressed.
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high severe
+Benchmarking packed_tensor/batch_scaling/batch/8: Analyzing
+packed_tensor/batch_scaling/batch/8
+                        time:   [25.010 ms 27.199 ms 29.734 ms]
+                        thrpt:  [378.83 Kelem/s 414.13 Kelem/s 450.39 Kelem/s]
+                 change:
+                        time:   [+66.518% +81.511% +100.75%] (p = 0.00 < 0.05)
+                        thrpt:  [-50.188% -44.907% -39.946%]
+                        Performance has regressed.
+Found 3 outliers among 50 measurements (6.00%)
+  1 (2.00%) high mild
+  2 (4.00%) high severe
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x1408
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x1408: Collecting 50 samples in estimated 2.0443 s (400 iterations)
+
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x1408: Analyzing
+packed_tensor/vs_fp16/packed_2bit/1408x1408
+                        time:   [2.1588 ms 2.3062 ms 2.4561 ms]
+                        thrpt:  [192.44 MiB/s 204.95 MiB/s 218.94 MiB/s]
+                 change:
+                        time:   [+6.9236% +16.308% +26.223%] (p = 0.00 < 0.05)
+                        thrpt:  [-20.775% -14.021% -6.4753%]
+                        Performance has regressed.
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x1408
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x1408: Collecting 50 samples in estimated 2.1917 s (5100 iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x1408: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/1408x1408
+                        time:   [408.75 µs 426.35 µs 446.83 µs]
+                        thrpt:  [1.0330 GiB/s 1.0826 GiB/s 1.1293 GiB/s]
+                 change:
+                        time:   [+14.779% +20.492% +26.141%] (p = 0.00 < 0.05)
+                        thrpt:  [-20.724% -17.007% -12.876%]
+                        Performance has regressed.
+Found 3 outliers among 50 measurements (6.00%)
+  3 (6.00%) high mild
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x1408
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x1408: Collecting 50 samples in estimated 2.1057 s (650 iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x1408: Analyzing
+packed_tensor/vs_fp16/packed_2bit/2048x1408
+                        time:   [3.0022 ms 3.2367 ms 3.5040 ms]
+                        thrpt:  [196.20 MiB/s 212.41 MiB/s 229.00 MiB/s]
+                 change:
+                        time:   [+0.3704% +10.172% +20.056%] (p = 0.05 < 0.05)
+                        thrpt:  [-16.705% -9.2331% -0.3691%]
+                        Change within noise threshold.
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high mild
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x1408
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x1408: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x1408: Collecting 50 samples in estimated 2.6580 s (3825 iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x1408: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/2048x1408
+                        time:   [596.99 µs 611.88 µs 627.43 µs]
+                        thrpt:  [1.0701 GiB/s 1.0973 GiB/s 1.1246 GiB/s]
+                 change:
+                        time:   [-17.690% -12.233% -6.7896%] (p = 0.00 < 0.05)
+                        thrpt:  [+7.2841% +13.939% +21.492%]
+                        Performance has improved.
+Found 3 outliers among 50 measurements (6.00%)
+  1 (2.00%) high mild
+  2 (4.00%) high severe
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x2048
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x2048: Collecting 50 samples in estimated 2.0277 s (17k iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/64x2048: Analyzing
+packed_tensor/vs_fp16/packed_2bit/64x2048
+                        time:   [117.29 µs 119.70 µs 121.84 µs]
+                        thrpt:  [256.48 MiB/s 261.07 MiB/s 266.42 MiB/s]
+                 change:
+                        time:   [-23.656% -16.908% -10.081%] (p = 0.00 < 0.05)
+                        thrpt:  [+11.212% +20.349% +30.987%]
+                        Performance has improved.
+Found 4 outliers among 50 measurements (8.00%)
+  3 (6.00%) high mild
+  1 (2.00%) high severe
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x2048
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x2048: Collecting 50 samples in estimated 2.0141 s (78k iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/64x2048: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/64x2048
+                        time:   [22.282 µs 24.026 µs 25.656 µs]
+                        thrpt:  [1.1895 GiB/s 1.2702 GiB/s 1.3696 GiB/s]
+                 change:
+                        time:   [-9.6238% -3.4228% +3.2500%] (p = 0.30 > 0.05)
+                        thrpt:  [-3.1477% +3.5441% +10.649%]
+                        No change in performance detected.
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high mild
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x2048
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x2048: Collecting 50 samples in estimated 2.5204 s (5100 iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/256x2048: Analyzing
+packed_tensor/vs_fp16/packed_2bit/256x2048
+                        time:   [474.89 µs 501.43 µs 531.00 µs]
+                        thrpt:  [235.40 MiB/s 249.29 MiB/s 263.22 MiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  4 (8.00%) high mild
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x2048
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x2048: Collecting 50 samples in estimated 2.0600 s (29k iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/256x2048: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/256x2048
+                        time:   [67.073 µs 68.954 µs 70.870 µs]
+                        thrpt:  [1.7225 GiB/s 1.7703 GiB/s 1.8200 GiB/s]
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x2048
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x2048: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 3.9s, enable flat sampling, or reduce sample count to 20.
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x2048: Collecting 50 samples in estimated 3.9303 s (1275 iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/1408x2048: Analyzing
+packed_tensor/vs_fp16/packed_2bit/1408x2048
+                        time:   [2.8326 ms 2.9401 ms 3.0650 ms]
+                        thrpt:  [224.31 MiB/s 233.84 MiB/s 242.71 MiB/s]
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x2048
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x2048: Collecting 50 samples in estimated 2.9407 s (3825 iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/1408x2048: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/1408x2048
+                        time:   [661.29 µs 686.17 µs 709.53 µs]
+                        thrpt:  [968.95 MiB/s 1001.9 MiB/s 1.0153 GiB/s]
+Found 4 outliers among 50 measurements (8.00%)
+  4 (8.00%) high severe
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x2048
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x2048: Collecting 50 samples in estimated 2.1905 s (450 iterations)
+Benchmarking packed_tensor/vs_fp16/packed_2bit/2048x2048: Analyzing
+packed_tensor/vs_fp16/packed_2bit/2048x2048
+                        time:   [4.1800 ms 4.4145 ms 4.6659 ms]
+                        thrpt:  [214.32 MiB/s 226.53 MiB/s 239.23 MiB/s]
+Found 3 outliers among 50 measurements (6.00%)
+  3 (6.00%) high mild
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x2048
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x2048: Warming up for 500.00 ms
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x2048: Collecting 50 samples in estimated 2.7990 s (2550 iterations)
+Benchmarking packed_tensor/vs_fp16/fp16_matmul/2048x2048: Analyzing
+packed_tensor/vs_fp16/fp16_matmul/2048x2048
+                        time:   [824.18 µs 876.08 µs 927.55 µs]
+                        thrpt:  [1.0528 GiB/s 1.1147 GiB/s 1.1849 GiB/s]
+Found 2 outliers among 50 measurements (4.00%)
+  1 (2.00%) high mild
+  1 (2.00%) high severe
+

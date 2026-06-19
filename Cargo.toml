@@ -11,6 +11,10 @@ rand = "0.8"
 name = "simd_kernel"
 harness = false
 
+[[bench]]
+name = "packed_tensor"
+harness = false
+
 [dependencies]
 candle-core = { path = "resources/candle/candle-core" }
 candle-nn = { path = "resources/candle/candle-nn" }
