@@ -3,6 +3,14 @@ name = "qmoe_engine"
 version = "0.1.0"
 edition = "2024"
 
+[dev-dependencies]
+criterion = { version = "0.5", features = ["csv_output"] }
+rand = "0.8"
+
+[[bench]]
+name = "simd_kernel"
+harness = false
+
 [dependencies]
 candle-core = { path = "resources/candle/candle-core" }
 candle-nn = { path = "resources/candle/candle-nn" }
