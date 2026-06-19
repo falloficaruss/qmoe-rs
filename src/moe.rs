@@ -70,13 +70,13 @@ impl QMoELayer {
             // Sort descending by logit score
             indexed_logits.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap_or(std::cmp::Ordering::Equal));
             
-            // Compute softmax over the top-k to get routing weights
+            // Compute softmax over ALL experts, then take top-k weights
+            let max_val = indexed_logits.iter().map(|x| x.1).fold(f32::NEG_INFINITY, f32::max);
+            let all_sum_exp: f32 = indexed_logits.iter().map(|x| (x.1 - max_val).exp()).sum();
             let top_k_elements = &indexed_logits[0..self.config.top_k];
-            let max_val = top_k_elements.iter().map(|x| x.1).fold(f32::NEG_INFINITY, f32::max);
-            let sum_exp: f32 = top_k_elements.iter().map(|x| (x.1 - max_val).exp()).sum();
             
             for &(expert_idx, score) in top_k_elements {
-                let weight = (score - max_val).exp() / sum_exp;
+                let weight = (score - max_val).exp() / all_sum_exp;
                 expert_bins[expert_idx].push((t, weight));
             }
         }
@@ -98,20 +98,20 @@ impl QMoELayer {
                 let token_tensor = Tensor::from_vec(token_vector.clone(), (1, hidden_dim), device)?;
 
                 // Expert MLP (SwiGLU-style):
-                // SwiGLU(x) = (gate_proj(x) * swish(up_proj(x))) * down_proj(x)
+                // SwiGLU(x) = (swish(gate_proj(x)) * up_proj(x)) * down_proj(x)
                 let gate_out = expert.gate_proj.forward_simd(&token_tensor)?;
                 let up_out = expert.up_proj.forward_simd(&token_tensor)?;
 
                 // Apply swish activation: x * sigmoid(x)
-                let up_out_vec = up_out.flatten_all()?.to_vec1::<f32>()?;
                 let gate_out_vec = gate_out.flatten_all()?.to_vec1::<f32>()?;
+                let up_out_vec = up_out.flatten_all()?.to_vec1::<f32>()?;
                 
                 let mut activated = Vec::with_capacity(up_out_vec.len());
                 for i in 0..up_out_vec.len() {
-                    let u = up_out_vec[i];
                     let g = gate_out_vec[i];
-                    let swish = u * (1.0 / (1.0 + (-u).exp()));
-                    activated.push(g * swish);
+                    let u = up_out_vec[i];
+                    let swish = g * (1.0 / (1.0 + (-g).exp()));
+                    activated.push(swish * u);
                 }
 
                 let activated_tensor = Tensor::from_vec(activated, (1, self.config.intermediate_dim), device)?;

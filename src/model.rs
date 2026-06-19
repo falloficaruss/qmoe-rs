@@ -42,8 +42,17 @@ impl Default for ModelConfig {
     }
 }
 
+/// YaRN mscale computation.
+fn yarn_get_mscale(scale: f64, mscale: f64) -> f64 {
+    if scale <= 1.0 {
+        1.0
+    } else {
+        0.1 * mscale * scale.ln() + 1.0
+    }
+}
+
 /// Precompute RoPE frequencies for a given sequence length.
-fn precompute_rope_freqs(seq_len: usize, head_dim: usize, device: &Device) -> Result<Tensor> {
+fn precompute_rope_freqs(seq_len: usize, head_dim: usize, rope_mscale: f64, device: &Device) -> Result<Tensor> {
     let inv_freq: Vec<f32> = (0..head_dim / 2)
         .map(|i| 1.0 / 10000.0_f64.powf(2.0 * i as f64 / head_dim as f64) as f32)
         .collect();
@@ -51,23 +60,27 @@ fn precompute_rope_freqs(seq_len: usize, head_dim: usize, device: &Device) -> Re
     let positions: Vec<f32> = (0..seq_len).map(|i| i as f32).collect();
     let positions = Tensor::from_vec(positions, seq_len, device)?;
     let angles = positions.unsqueeze(1)?.matmul(&inv_freq.unsqueeze(0)?)?;
-    let cos = angles.cos()?;
-    let sin = angles.sin()?;
+    let cos = (angles.cos()? * rope_mscale)?;
+    let sin = (angles.sin()? * rope_mscale)?;
     Ok(Tensor::cat(&[&cos, &sin], 1)?)
 }
 
 /// Apply RoPE to a tensor of shape [b, heads (or 1), seq, head_dim].
+/// Uses even-odd pairing (2i, 2i+1) matching the HuggingFace implementation.
 fn apply_rope(x: &Tensor, cos_sin: &Tensor) -> Result<Tensor> {
     let head_dim = x.dim(3)?;
     let half = head_dim / 2;
-    let x_rot = x.narrow(3, 0, half)?;
-    let x_pass = x.narrow(3, half, half)?;
     // cos/sin shape: [seq, half], expand to [1, 1, seq, half]
     let cos = cos_sin.narrow(1, 0, half)?.unsqueeze(0)?.unsqueeze(0)?;
     let sin = cos_sin.narrow(1, half, half)?.unsqueeze(0)?.unsqueeze(0)?;
-    let rotated = (x_rot.broadcast_mul(&cos)? - x_pass.broadcast_mul(&sin)?)?;
-    let passed = (x_rot.broadcast_mul(&sin)? + x_pass.broadcast_mul(&cos)?)?;
-    Ok(Tensor::cat(&[&rotated, &passed], 3)?)
+    // Reshape to separate even-odd pairs: [b, h, seq, half, 2]
+    let x_pairs = x.reshape((x.dim(0)?, x.dim(1)?, x.dim(2)?, half, 2))?;
+    let x_even = x_pairs.narrow(4, 0, 1)?.squeeze(4)?;
+    let x_odd = x_pairs.narrow(4, 1, 1)?.squeeze(4)?;
+    let rotated = (x_even.broadcast_mul(&cos)? - x_odd.broadcast_mul(&sin)?)?;
+    let passed = (x_odd.broadcast_mul(&cos)? + x_even.broadcast_mul(&sin)?)?;
+    let result = Tensor::stack(&[&rotated, &passed], 4)?.reshape(x.shape())?;
+    Ok(result)
 }
 
 /// KV cache for MLA: stores the decompressed K and V accumulated so far.
@@ -101,6 +114,8 @@ pub struct MlaAttention {
     pub qk_rope_head_dim: usize,
     pub v_head_dim: usize,
     pub kv_lora_rank: usize,
+    pub rope_mscale: f64,
+    pub softmax_scale: f64,
 }
 
 impl MlaAttention {
@@ -139,6 +154,20 @@ impl MlaAttention {
             qk_rope_head_dim: config.qk_rope_head_dim,
             v_head_dim: config.v_head_dim,
             kv_lora_rank: config.kv_lora_rank,
+            rope_mscale: {
+                let factor = 40.0;
+                let mscale = 1.0;
+                let mscale_all_dim = 0.707;
+                yarn_get_mscale(factor, mscale) / yarn_get_mscale(factor, mscale_all_dim)
+            },
+            softmax_scale: {
+                let q_head_dim = (config.qk_nope_head_dim + config.qk_rope_head_dim) as f64;
+                let factor = 40.0;
+                let mscale_all_dim = 0.707;
+                let base_scale = q_head_dim.powf(-0.5);
+                let mscale_yarn = yarn_get_mscale(factor, mscale_all_dim);
+                base_scale * mscale_yarn * mscale_yarn
+            },
         })
     }
 
@@ -161,7 +190,7 @@ impl MlaAttention {
     pub fn forward_prefill(&self, xs: &Tensor) -> Result<(Tensor, KVCache)> {
         let (b_sz, seq_len, _) = xs.dims3()?;
         let device = xs.device();
-        let rope_freqs = precompute_rope_freqs(seq_len, self.qk_rope_head_dim, device)?;
+        let rope_freqs = precompute_rope_freqs(seq_len, self.qk_rope_head_dim, self.rope_mscale, device)?;
 
         // Q projection: [b, seq, 3072]
         let q = self.q_proj.forward(xs)?;
@@ -187,9 +216,8 @@ impl MlaAttention {
         let k_rope = apply_rope(&k_rope, &rope_freqs)?;
 
         // Attention scores: Q_nope @ K_nope^T + Q_rope @ K_rope^T
-        let scale = 1.0f64 / ((self.qk_nope_head_dim + self.qk_rope_head_dim) as f64).sqrt();
         let scores = (q_nope.matmul(&k.transpose(2, 3)?)? + q_rope.matmul(&k_rope.transpose(2, 3)?)?)?;
-        let scores = (scores * scale as f64)?;
+        let scores = (scores * self.softmax_scale)?;
 
         // Causal mask
         let causal_mask = {
@@ -217,7 +245,7 @@ impl MlaAttention {
         let (b_sz, seq_len, _) = xs.dims3()?;
         let device = xs.device();
         let total_seq_len = cache.k.dim(2)? + seq_len;
-        let rope_freqs = precompute_rope_freqs(total_seq_len, self.qk_rope_head_dim, device)?;
+        let rope_freqs = precompute_rope_freqs(total_seq_len, self.qk_rope_head_dim, self.rope_mscale, device)?;
 
         // Q projection: transpose to [b, heads, seq, dim]
         let q = self.q_proj.forward(xs)?;
@@ -249,7 +277,6 @@ impl MlaAttention {
         };
 
         // Full attention against cached history
-        let scale = 1.0f64 / ((self.qk_nope_head_dim + self.qk_rope_head_dim) as f64).sqrt();
         let k_cached = cache.k.narrow(2, 0, total_seq_len - seq_len)?;
         let k_full = Tensor::cat(&[&k_cached, &k_new], 2)?;
         let v_cached = cache.v.narrow(2, 0, total_seq_len - seq_len)?;
@@ -258,7 +285,7 @@ impl MlaAttention {
         let scores_nope = q_nope.matmul(&k_full.transpose(2, 3)?)?;
         let scores_rope = q_rope.matmul(&k_rope.transpose(2, 3)?)?;
         let scores = (scores_nope + scores_rope)?;
-        let scores = (scores * scale as f64)?;
+        let scores = (scores * self.softmax_scale)?;
 
         let attn_weights = candle_nn::ops::softmax(&scores, 3)?;
         let context = attn_weights.matmul(&v_full)?;
@@ -292,10 +319,10 @@ impl SharedExpert {
         let up_vec = up_out.flatten_all()?.to_vec1::<f32>()?;
         let mut activated = Vec::with_capacity(up_vec.len());
         for i in 0..up_vec.len() {
-            let u = up_vec[i];
             let g = gate_vec[i];
-            let swish = u * (1.0 / (1.0 + (-u).exp()));
-            activated.push(g * swish);
+            let u = up_vec[i];
+            let swish = g * (1.0 / (1.0 + (-g).exp()));
+            activated.push(swish * u);
         }
         let intermediate_size = up_vec.len() / (b_sz * seq_len);
         let activated_tensor = Tensor::from_vec(
