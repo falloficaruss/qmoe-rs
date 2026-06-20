@@ -15,6 +15,10 @@ harness = false
 name = "packed_tensor"
 harness = false
 
+[[bench]]
+name = "moe_layer"
+harness = false
+
 [dependencies]
 candle-core = { path = "resources/candle/candle-core" }
 candle-nn = { path = "resources/candle/candle-nn" }

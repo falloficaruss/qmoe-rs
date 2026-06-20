@@ -1,0 +1,419 @@
+   Compiling qmoe_engine v0.1.0 (/home/falloficaruss/qmoe.rs)
+    Finished `bench` profile [optimized] target(s) in 6.72s
+     Running benches/moe_layer.rs (target/release/deps/moe_layer-aeda9f59c5683218)
+Gnuplot not found, using plotters backend
+Benchmarking moe_layer/throughput_tokens/tokens/1
+Benchmarking moe_layer/throughput_tokens/tokens/1: Warming up for 200.00 ms
+Benchmarking moe_layer/throughput_tokens/tokens/1: Collecting 10 samples in estimated 679.04 ms (20 iterations)
+Benchmarking moe_layer/throughput_tokens/tokens/1: Analyzing
+moe_layer/throughput_tokens/tokens/1
+                        time:   [32.594 ms 34.645 ms 36.787 ms]
+                        thrpt:  [27.184  elem/s 28.864  elem/s 30.681  elem/s]
+                 change:
+                        time:   [+0.6907% +7.3112% +14.219%] (p = 0.06 > 0.05)
+                        thrpt:  [-12.449% -6.8131% -0.6859%]
+                        No change in performance detected.
+Benchmarking moe_layer/throughput_tokens/tokens/2
+Benchmarking moe_layer/throughput_tokens/tokens/2: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 691.6ms.
+Benchmarking moe_layer/throughput_tokens/tokens/2: Collecting 10 samples in estimated 691.62 ms (10 iterations)
+Benchmarking moe_layer/throughput_tokens/tokens/2: Analyzing
+moe_layer/throughput_tokens/tokens/2
+                        time:   [63.666 ms 67.340 ms 71.054 ms]
+                        thrpt:  [28.148  elem/s 29.700  elem/s 31.414  elem/s]
+                 change:
+                        time:   [+0.5479% +6.7056% +13.419%] (p = 0.04 < 0.05)
+                        thrpt:  [-11.832% -6.2842% -0.5449%]
+                        Change within noise threshold.
+Benchmarking moe_layer/throughput_tokens/tokens/4
+Benchmarking moe_layer/throughput_tokens/tokens/4: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 1.4s.
+Benchmarking moe_layer/throughput_tokens/tokens/4: Collecting 10 samples in estimated 1.4223 s (10 iterations)
+Benchmarking moe_layer/throughput_tokens/tokens/4: Analyzing
+moe_layer/throughput_tokens/tokens/4
+                        time:   [138.56 ms 143.91 ms 149.29 ms]
+                        thrpt:  [26.793  elem/s 27.795  elem/s 28.867  elem/s]
+                 change:
+                        time:   [+4.3931% +9.5510% +14.928%] (p = 0.00 < 0.05)
+                        thrpt:  [-12.989% -8.7183% -4.2082%]
+                        Performance has regressed.
+Benchmarking moe_layer/throughput_tokens/tokens/8
+Benchmarking moe_layer/throughput_tokens/tokens/8: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 3.0s.
+Benchmarking moe_layer/throughput_tokens/tokens/8: Collecting 10 samples in estimated 2.9639 s (10 iterations)
+Benchmarking moe_layer/throughput_tokens/tokens/8: Analyzing
+moe_layer/throughput_tokens/tokens/8
+                        time:   [267.95 ms 279.73 ms 292.86 ms]
+                        thrpt:  [27.316  elem/s 28.599  elem/s 29.857  elem/s]
+                 change:
+                        time:   [-3.9401% +1.4536% +7.5562%] (p = 0.59 > 0.05)
+                        thrpt:  [-7.0254% -1.4328% +4.1017%]
+                        No change in performance detected.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+Benchmarking moe_layer/throughput_tokens/tokens/16
+Benchmarking moe_layer/throughput_tokens/tokens/16: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 5.5s.
+Benchmarking moe_layer/throughput_tokens/tokens/16: Collecting 10 samples in estimated 5.5008 s (10 iterations)
+Benchmarking moe_layer/throughput_tokens/tokens/16: Analyzing
+moe_layer/throughput_tokens/tokens/16
+                        time:   [549.65 ms 565.67 ms 582.29 ms]
+                        thrpt:  [27.478  elem/s 28.285  elem/s 29.109  elem/s]
+                 change:
+                        time:   [-7.5254% -1.8609% +3.8169%] (p = 0.63 > 0.05)
+                        thrpt:  [-3.6765% +1.8961% +8.1378%]
+                        No change in performance detected.
+Benchmarking moe_layer/throughput_tokens/tokens/32
+Benchmarking moe_layer/throughput_tokens/tokens/32: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 11.2s.
+Benchmarking moe_layer/throughput_tokens/tokens/32: Collecting 10 samples in estimated 11.231 s (10 iterations)
+Benchmarking moe_layer/throughput_tokens/tokens/32: Analyzing
+moe_layer/throughput_tokens/tokens/32
+                        time:   [1.1383 s 1.1612 s 1.1867 s]
+                        thrpt:  [26.966  elem/s 27.558  elem/s 28.112  elem/s]
+                 change:
+                        time:   [+1.7213% +6.4298% +10.914%] (p = 0.00 < 0.05)
+                        thrpt:  [-9.8402% -6.0414% -1.6922%]
+                        Performance has regressed.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+
+Benchmarking moe_layer/throughput_experts/experts/8
+Benchmarking moe_layer/throughput_experts/experts/8: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 5.0s.
+Benchmarking moe_layer/throughput_experts/experts/8: Collecting 10 samples in estimated 5.0264 s (10 iterations)
+Benchmarking moe_layer/throughput_experts/experts/8: Analyzing
+moe_layer/throughput_experts/experts/8
+                        time:   [485.72 ms 492.56 ms 498.98 ms]
+                        thrpt:  [32.066  elem/s 32.483  elem/s 32.941  elem/s]
+                 change:
+                        time:   [-24.714% -20.211% -15.523%] (p = 0.00 < 0.05)
+                        thrpt:  [+18.375% +25.330% +32.827%]
+                        Performance has improved.
+Benchmarking moe_layer/throughput_experts/experts/16
+Benchmarking moe_layer/throughput_experts/experts/16: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 5.3s.
+Benchmarking moe_layer/throughput_experts/experts/16: Collecting 10 samples in estimated 5.3359 s (10 iterations)
+Benchmarking moe_layer/throughput_experts/experts/16: Analyzing
+moe_layer/throughput_experts/experts/16
+                        time:   [502.75 ms 510.97 ms 518.96 ms]
+                        thrpt:  [30.831  elem/s 31.313  elem/s 31.825  elem/s]
+                 change:
+                        time:   [-29.784% -24.701% -19.480%] (p = 0.00 < 0.05)
+                        thrpt:  [+24.193% +32.804% +42.417%]
+                        Performance has improved.
+Benchmarking moe_layer/throughput_experts/experts/32
+Benchmarking moe_layer/throughput_experts/experts/32: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 5.3s.
+Benchmarking moe_layer/throughput_experts/experts/32: Collecting 10 samples in estimated 5.2943 s (10 iterations)
+Benchmarking moe_layer/throughput_experts/experts/32: Analyzing
+moe_layer/throughput_experts/experts/32
+                        time:   [517.74 ms 527.16 ms 538.04 ms]
+                        thrpt:  [29.738  elem/s 30.351  elem/s 30.904  elem/s]
+                 change:
+                        time:   [-4.2805% +0.1672% +4.7678%] (p = 0.92 > 0.05)
+                        thrpt:  [-4.5509% -0.1669% +4.4719%]
+                        No change in performance detected.
+Found 2 outliers among 10 measurements (20.00%)
+  1 (10.00%) high mild
+  1 (10.00%) high severe
+Benchmarking moe_layer/throughput_experts/experts/64
+Benchmarking moe_layer/throughput_experts/experts/64: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 5.3s.
+Benchmarking moe_layer/throughput_experts/experts/64: Collecting 10 samples in estimated 5.3020 s (10 iterations)
+Benchmarking moe_layer/throughput_experts/experts/64: Analyzing
+moe_layer/throughput_experts/experts/64
+                        time:   [532.97 ms 558.69 ms 590.48 ms]
+                        thrpt:  [27.097  elem/s 28.639  elem/s 30.020  elem/s]
+                 change:
+                        time:   [+7.2266% +13.464% +19.674%] (p = 0.00 < 0.05)
+                        thrpt:  [-16.440% -11.866% -6.7396%]
+                        Performance has regressed.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+
+Benchmarking moe_layer/throughput_topk/topk/2
+Benchmarking moe_layer/throughput_topk/topk/2: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 2.9s.
+Benchmarking moe_layer/throughput_topk/topk/2: Collecting 10 samples in estimated 2.9200 s (10 iterations)
+Benchmarking moe_layer/throughput_topk/topk/2: Analyzing
+moe_layer/throughput_topk/topk/2
+                        time:   [270.41 ms 281.22 ms 293.12 ms]
+                        thrpt:  [54.584  elem/s 56.896  elem/s 59.170  elem/s]
+                 change:
+                        time:   [+5.2196% +10.026% +14.884%] (p = 0.00 < 0.05)
+                        thrpt:  [-12.955% -9.1124% -4.9606%]
+                        Performance has regressed.
+Benchmarking moe_layer/throughput_topk/topk/4
+Benchmarking moe_layer/throughput_topk/topk/4: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 5.7s.
+Benchmarking moe_layer/throughput_topk/topk/4: Collecting 10 samples in estimated 5.6692 s (10 iterations)
+Benchmarking moe_layer/throughput_topk/topk/4: Analyzing
+moe_layer/throughput_topk/topk/4
+                        time:   [545.17 ms 555.05 ms 564.75 ms]
+                        thrpt:  [28.331  elem/s 28.826  elem/s 29.349  elem/s]
+                 change:
+                        time:   [-4.7179% -2.1906% +0.3106%] (p = 0.18 > 0.05)
+                        thrpt:  [-0.3096% +2.2397% +4.9515%]
+                        No change in performance detected.
+Benchmarking moe_layer/throughput_topk/topk/6
+Benchmarking moe_layer/throughput_topk/topk/6: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 9.0s.
+Benchmarking moe_layer/throughput_topk/topk/6: Collecting 10 samples in estimated 9.0038 s (10 iterations)
+Benchmarking moe_layer/throughput_topk/topk/6: Analyzing
+moe_layer/throughput_topk/topk/6
+                        time:   [866.51 ms 885.38 ms 905.06 ms]
+                        thrpt:  [17.678  elem/s 18.071  elem/s 18.465  elem/s]
+                 change:
+                        time:   [-3.5483% -0.5286% +2.5202%] (p = 0.79 > 0.05)
+                        thrpt:  [-2.4583% +0.5314% +3.6788%]
+                        No change in performance detected.
+Benchmarking moe_layer/throughput_topk/topk/8
+Benchmarking moe_layer/throughput_topk/topk/8: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 12.7s.
+Benchmarking moe_layer/throughput_topk/topk/8: Collecting 10 samples in estimated 12.681 s (10 iterations)
+Benchmarking moe_layer/throughput_topk/topk/8: Analyzing
+moe_layer/throughput_topk/topk/8
+                        time:   [1.1592 s 1.1844 s 1.2101 s]
+                        thrpt:  [13.223  elem/s 13.509  elem/s 13.802  elem/s]
+                 change:
+                        time:   [+7.9215% +12.020% +16.330%] (p = 0.00 < 0.05)
+                        thrpt:  [-14.038% -10.730% -7.3401%]
+                        Performance has regressed.
+
+Benchmarking moe_layer/throughput_dim/dim/toy
+Benchmarking moe_layer/throughput_dim/dim/toy: Warming up for 200.00 ms
+Benchmarking moe_layer/throughput_dim/dim/toy: Collecting 10 samples in estimated 725.93 ms (165 iterations)
+Benchmarking moe_layer/throughput_dim/dim/toy: Analyzing
+moe_layer/throughput_dim/dim/toy
+                        time:   [4.1512 ms 4.2616 ms 4.4507 ms]
+                        thrpt:  [230.07 Kelem/s 240.28 Kelem/s 246.67 Kelem/s]
+                 change:
+                        time:   [+8.7483% +14.311% +20.650%] (p = 0.00 < 0.05)
+                        thrpt:  [-17.116% -12.519% -8.0445%]
+                        Performance has regressed.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high severe
+Benchmarking moe_layer/throughput_dim/dim/real
+Benchmarking moe_layer/throughput_dim/dim/real: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 6.2s.
+Benchmarking moe_layer/throughput_dim/dim/real: Collecting 10 samples in estimated 6.2156 s (10 iterations)
+Benchmarking moe_layer/throughput_dim/dim/real: Analyzing
+moe_layer/throughput_dim/dim/real
+                        time:   [595.72 ms 614.09 ms 635.25 ms]
+                        thrpt:  [51.583 Kelem/s 53.360 Kelem/s 55.005 Kelem/s]
+                 change:
+                        time:   [+11.187% +14.940% +19.457%] (p = 0.00 < 0.05)
+                        thrpt:  [-16.288% -12.998% -10.061%]
+                        Performance has regressed.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+
+Benchmarking moe_layer/breakdown/full
+Benchmarking moe_layer/breakdown/full: Warming up for 200.00 ms
+
+Warning: Unable to complete 20 samples in 500.0ms. You may wish to increase target time to 11.8s, or reduce sample count to 10.
+Benchmarking moe_layer/breakdown/full: Collecting 20 samples in estimated 11.848 s (20 iterations)
+Benchmarking moe_layer/breakdown/full: Analyzing
+moe_layer/breakdown/full
+                        time:   [517.57 ms 545.51 ms 575.43 ms]
+                        change: [-9.3731% -3.5897% +1.6506%] (p = 0.25 > 0.05)
+                        No change in performance detected.
+
+Benchmarking moe_layer/vs_oracle/standard/16
+Benchmarking moe_layer/vs_oracle/standard/16: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 5.2s.
+Benchmarking moe_layer/vs_oracle/standard/16: Collecting 10 samples in estimated 5.2122 s (10 iterations)
+Benchmarking moe_layer/vs_oracle/standard/16: Analyzing
+moe_layer/vs_oracle/standard/16
+                        time:   [503.62 ms 511.97 ms 521.65 ms]
+                        thrpt:  [30.672  elem/s 31.252  elem/s 31.770  elem/s]
+                 change:
+                        time:   [-14.652% -12.581% -10.407%] (p = 0.00 < 0.05)
+                        thrpt:  [+11.616% +14.391% +17.168%]
+                        Performance has improved.
+Benchmarking moe_layer/vs_oracle/oracle/16
+Benchmarking moe_layer/vs_oracle/oracle/16: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 41.4s.
+Benchmarking moe_layer/vs_oracle/oracle/16: Collecting 10 samples in estimated 41.419 s (10 iterations)
+Benchmarking moe_layer/vs_oracle/oracle/16: Analyzing
+moe_layer/vs_oracle/oracle/16
+                        time:   [4.3721 s 4.4615 s 4.5516 s]
+                        thrpt:  [3.5153  elem/s 3.5862  elem/s 3.6596  elem/s]
+                 change:
+                        time:   [-1.3455% +1.7229% +4.9710%] (p = 0.33 > 0.05)
+                        thrpt:  [-4.7356% -1.6938% +1.3639%]
+                        No change in performance detected.
+
+Benchmarking moe_layer/vs_naive/standard/16
+Benchmarking moe_layer/vs_naive/standard/16: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 6.4s.
+Benchmarking moe_layer/vs_naive/standard/16: Collecting 10 samples in estimated 6.4373 s (10 iterations)
+Benchmarking moe_layer/vs_naive/standard/16: Analyzing
+moe_layer/vs_naive/standard/16
+                        time:   [510.99 ms 540.88 ms 570.98 ms]
+                        thrpt:  [28.022  elem/s 29.582  elem/s 31.312  elem/s]
+                 change:
+                        time:   [-0.7265% +5.4315% +11.033%] (p = 0.07 > 0.05)
+                        thrpt:  [-9.9363% -5.1516% +0.7318%]
+                        No change in performance detected.
+Benchmarking moe_layer/vs_naive/naive_loop/16
+Benchmarking moe_layer/vs_naive/naive_loop/16: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 5.1s.
+Benchmarking moe_layer/vs_naive/naive_loop/16: Collecting 10 samples in estimated 5.0959 s (10 iterations)
+Benchmarking moe_layer/vs_naive/naive_loop/16: Analyzing
+moe_layer/vs_naive/naive_loop/16
+                        time:   [497.90 ms 509.98 ms 522.94 ms]
+                        thrpt:  [30.596  elem/s 31.374  elem/s 32.135  elem/s]
+                 change:
+                        time:   [-9.8299% -6.0763% -2.8244%] (p = 0.00 < 0.05)
+                        thrpt:  [+2.9065% +6.4694% +10.901%]
+                        Performance has improved.
+
+Benchmarking moe_layer/vs_fp16/packed_2bit/16
+Benchmarking moe_layer/vs_fp16/packed_2bit/16: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 5.3s.
+Benchmarking moe_layer/vs_fp16/packed_2bit/16: Collecting 10 samples in estimated 5.3451 s (10 iterations)
+Benchmarking moe_layer/vs_fp16/packed_2bit/16: Analyzing
+moe_layer/vs_fp16/packed_2bit/16
+                        time:   [514.43 ms 524.41 ms 534.87 ms]
+                        thrpt:  [29.914  elem/s 30.510  elem/s 31.103  elem/s]
+                 change:
+                        time:   [-8.7497% -6.5260% -4.3631%] (p = 0.00 < 0.05)
+                        thrpt:  [+4.5621% +6.9817% +9.5887%]
+                        Performance has improved.
+Benchmarking moe_layer/vs_fp16/fp16_matmul/16
+Benchmarking moe_layer/vs_fp16/fp16_matmul/16: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 1.3s.
+Benchmarking moe_layer/vs_fp16/fp16_matmul/16: Collecting 10 samples in estimated 1.2511 s (10 iterations)
+Benchmarking moe_layer/vs_fp16/fp16_matmul/16: Analyzing
+moe_layer/vs_fp16/fp16_matmul/16
+                        time:   [119.40 ms 122.20 ms 124.92 ms]
+                        thrpt:  [128.08  elem/s 130.94  elem/s 134.00  elem/s]
+
+Benchmarking moe_layer/breakdown_varied/breakdown/1
+Benchmarking moe_layer/breakdown_varied/breakdown/1: Warming up for 200.00 ms
+Benchmarking moe_layer/breakdown_varied/breakdown/1: Collecting 10 samples in estimated 701.76 ms (20 iterations)
+Benchmarking moe_layer/breakdown_varied/breakdown/1: Analyzing
+moe_layer/breakdown_varied/breakdown/1
+                        time:   [35.501 ms 37.258 ms 38.836 ms]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) low mild
+Benchmarking moe_layer/breakdown_varied/breakdown/4
+Benchmarking moe_layer/breakdown_varied/breakdown/4: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 1.4s.
+Benchmarking moe_layer/breakdown_varied/breakdown/4: Collecting 10 samples in estimated 1.4461 s (10 iterations)
+Benchmarking moe_layer/breakdown_varied/breakdown/4: Analyzing
+moe_layer/breakdown_varied/breakdown/4
+                        time:   [135.79 ms 141.35 ms 147.40 ms]
+Benchmarking moe_layer/breakdown_varied/breakdown/16
+Benchmarking moe_layer/breakdown_varied/breakdown/16: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 5.9s.
+Benchmarking moe_layer/breakdown_varied/breakdown/16: Collecting 10 samples in estimated 5.8662 s (10 iterations)
+Benchmarking moe_layer/breakdown_varied/breakdown/16: Analyzing
+moe_layer/breakdown_varied/breakdown/16
+                        time:   [551.04 ms 577.07 ms 611.26 ms]
+Found 2 outliers among 10 measurements (20.00%)
+  1 (10.00%) high mild
+  1 (10.00%) high severe
+Benchmarking moe_layer/breakdown_varied/breakdown/32
+Benchmarking moe_layer/breakdown_varied/breakdown/32: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 12.0s.
+Benchmarking moe_layer/breakdown_varied/breakdown/32: Collecting 10 samples in estimated 12.042 s (10 iterations)
+Benchmarking moe_layer/breakdown_varied/breakdown/32: Analyzing
+moe_layer/breakdown_varied/breakdown/32
+                        time:   [1.1182 s 1.1394 s 1.1598 s]
+
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/1
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/1: Warming up for 200.00 ms
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/1: Collecting 10 samples in estimated 501.23 ms (1705 iterations)
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/1: Analyzing
+moe_layer/breakdown_toy/breakdown_toy/1
+                        time:   [282.08 µs 309.53 µs 336.83 µs]
+Found 2 outliers among 10 measurements (20.00%)
+  1 (10.00%) high mild
+  1 (10.00%) high severe
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/4
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/4: Warming up for 200.00 ms
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/4: Collecting 10 samples in estimated 519.17 ms (440 iterations)
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/4: Analyzing
+moe_layer/breakdown_toy/breakdown_toy/4
+                        time:   [1.0658 ms 1.1541 ms 1.2379 ms]
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/16
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/16: Warming up for 200.00 ms
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/16: Collecting 10 samples in estimated 736.62 ms (165 iterations)
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/16: Analyzing
+moe_layer/breakdown_toy/breakdown_toy/16
+                        time:   [4.0594 ms 4.2717 ms 4.5512 ms]
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/32
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/32: Warming up for 200.00 ms
+
+Warning: Unable to complete 10 samples in 500.0ms. You may wish to increase target time to 501.6ms or enable flat sampling.
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/32: Collecting 10 samples in estimated 501.63 ms (55 iterations)
+Benchmarking moe_layer/breakdown_toy/breakdown_toy/32: Analyzing
+moe_layer/breakdown_toy/breakdown_toy/32
+                        time:   [9.0788 ms 9.6116 ms 10.027 ms]
+Found 2 outliers among 10 measurements (20.00%)
+  1 (10.00%) low mild
+  1 (10.00%) high severe
+
+
+## MoE Layer Breakdown — Single-Shot Timing
+
+Config: 16 tokens, 32 experts, top-4, hidden_dim=2048, intermediate_dim=1408
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+| Gate matmul | 216.85 µs | 0.0% |
+| Top-k sorting | 4.18 µs | 0.0% |
+| Softmax + binning | 26.21 µs | 0.0% |
+| Expert compute (3× fwd_simd + SwiGLU) | 597928.31 µs (597.93 ms) | 100.0% |
+| Overhead & combine | 0.00 µs | 0.0% |
+| **Total** | **598175.55 µs** | **100%** |
+
+### Toy Dim (hidden_dim=64, intermediate_dim=256)
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+| Gate matmul | 27.27 µs | 0.6% |
+| Top-k sorting | 4.45 µs | 0.1% |
+| Softmax + binning | 7.90 µs | 0.2% |
+| Expert compute (3× fwd_simd + SwiGLU) | 4331.75 µs (4.33 ms) | 99.1% |
+| Overhead & combine | 0.00 µs | 0.0% |
+| **Total** | **4371.36 µs** | **100%** |
+
+
+## Routing Overhead — Standard vs Oracle
+
+Config: 16 tokens, 32 experts, top-4, hidden_dim=2048
+
+| Variant | Latency (μs) | vs Standard |
+|---------|-------------|-------------|
+| Standard (binned routing) | 621772.26 µs (621.77 ms) | 1.00× |
+| Oracle (all experts, no routing) | 4376535.15 µs (4376.54 ms) | 7.04× |
+| Naive loop (no binning) | 504730.12 µs (504.73 ms) | 0.81× |
+| FP16 matmul (unquantized) | 118830.28 µs (118.83 ms) | 0.19× |
+
