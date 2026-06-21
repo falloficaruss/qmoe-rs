@@ -52,7 +52,7 @@ fn yarn_get_mscale(scale: f64, mscale: f64) -> f64 {
 }
 
 /// Precompute RoPE frequencies for a given sequence length.
-fn precompute_rope_freqs(seq_len: usize, head_dim: usize, rope_mscale: f64, device: &Device) -> Result<Tensor> {
+pub fn precompute_rope_freqs(seq_len: usize, head_dim: usize, rope_mscale: f64, device: &Device) -> Result<Tensor> {
     let inv_freq: Vec<f32> = (0..head_dim / 2)
         .map(|i| 1.0 / 10000.0_f64.powf(2.0 * i as f64 / head_dim as f64) as f32)
         .collect();
@@ -67,7 +67,7 @@ fn precompute_rope_freqs(seq_len: usize, head_dim: usize, rope_mscale: f64, devi
 
 /// Apply RoPE to a tensor of shape [b, heads (or 1), seq, head_dim].
 /// Uses even-odd pairing (2i, 2i+1) matching the HuggingFace implementation.
-fn apply_rope(x: &Tensor, cos_sin: &Tensor) -> Result<Tensor> {
+pub fn apply_rope(x: &Tensor, cos_sin: &Tensor) -> Result<Tensor> {
     let head_dim = x.dim(3)?;
     let half = head_dim / 2;
     // cos/sin shape: [seq, half], expand to [1, 1, seq, half]
@@ -83,20 +83,23 @@ fn apply_rope(x: &Tensor, cos_sin: &Tensor) -> Result<Tensor> {
     Ok(result)
 }
 
-/// KV cache for MLA: stores the decompressed K and V accumulated so far.
+/// KV cache for MLA: stores the decompressed K, V, and RoPE'd K accumulated so far.
+#[derive(Clone)]
 pub struct KVCache {
     pub k: Tensor,
     pub v: Tensor,
+    pub k_rope: Tensor,
 }
 
 impl KVCache {
-    pub fn new(k: Tensor, v: Tensor) -> Self {
-        Self { k, v }
+    pub fn new(k: Tensor, v: Tensor, k_rope: Tensor) -> Self {
+        Self { k, v, k_rope }
     }
 
-    pub fn append(&mut self, k: &Tensor, v: &Tensor) -> Result<()> {
-        self.k = Tensor::cat(&[&self.k, k], 2)?;
-        self.v = Tensor::cat(&[&self.v, v], 2)?;
+    pub fn append(&mut self, k: &Tensor, v: &Tensor, k_rope: &Tensor) -> Result<()> {
+        self.k = Tensor::cat(&[&self.k, k], 2)?.contiguous()?;
+        self.v = Tensor::cat(&[&self.v, v], 2)?.contiguous()?;
+        self.k_rope = Tensor::cat(&[&self.k_rope, k_rope], 2)?.contiguous()?;
         Ok(())
     }
 }
@@ -215,27 +218,36 @@ impl MlaAttention {
         let k_rope = kv_a_rope.unsqueeze(2)?.expand((b_sz, seq_len, self.num_kv_heads, self.qk_rope_head_dim))?.transpose(1, 2)?;
         let k_rope = apply_rope(&k_rope, &rope_freqs)?;
 
-        // Attention scores: Q_nope @ K_nope^T + Q_rope @ K_rope^T
-        let scores = (q_nope.matmul(&k.transpose(2, 3)?)? + q_rope.matmul(&k_rope.transpose(2, 3)?)?)?;
-        let scores = (scores * self.softmax_scale)?;
+        #[cfg(feature = "fused_attn")]
+        let context = crate::attention_kernel::fused_prefill_attn(
+            &q_nope, &q_rope, &k, &k_rope, &v,
+            self.softmax_scale, true,
+        )?;
 
-        // Causal mask
-        let causal_mask = {
-            let r = Tensor::arange(0u32, seq_len as u32, device)?;
-            let row = r.unsqueeze(1)?.expand((seq_len, seq_len))?;
-            let col = r.unsqueeze(0)?.expand((seq_len, seq_len))?;
-            row.lt(&col)?
-                .to_dtype(DType::F32)?
-                .reshape((1, 1, seq_len, seq_len))?
-                .broadcast_as(scores.shape())?
+        #[cfg(not(feature = "fused_attn"))]
+        let context = {
+            // Attention scores: Q_nope @ K_nope^T + Q_rope @ K_rope^T
+            let scores = (q_nope.matmul(&k.transpose(2, 3)?)? + q_rope.matmul(&k_rope.transpose(2, 3)?)?)?;
+            let scores = (scores * self.softmax_scale)?;
+
+            // Causal mask
+            let causal_mask = {
+                let r = Tensor::arange(0u32, seq_len as u32, device)?;
+                let row = r.unsqueeze(1)?.expand((seq_len, seq_len))?;
+                let col = r.unsqueeze(0)?.expand((seq_len, seq_len))?;
+                row.lt(&col)?
+                    .to_dtype(DType::F32)?
+                    .reshape((1, 1, seq_len, seq_len))?
+                    .broadcast_as(scores.shape())?
+            };
+            let scores = (scores + (causal_mask * (-1e18f64))?)?;
+
+            let attn_weights = candle_nn::ops::softmax(&scores, 3)?;
+            attn_weights.matmul(&v)?
         };
-        let scores = (scores + (causal_mask * (-1e18f64))?)?;
-
-        let attn_weights = candle_nn::ops::softmax(&scores, 3)?;
-        let context = attn_weights.matmul(&v)?;
         let context = context.transpose(1, 2)?.reshape((b_sz, seq_len, self.num_heads * self.v_head_dim))?;
         let output = self.o_proj.forward(&context)?;
-        let cache = KVCache::new(k, v);
+        let cache = KVCache::new(k.contiguous()?, v.contiguous()?, k_rope.contiguous()?);
 
         Ok((output, cache))
     }
@@ -252,7 +264,7 @@ impl MlaAttention {
         let q = q.reshape((b_sz, seq_len, self.num_heads, self.qk_nope_head_dim + self.qk_rope_head_dim))?;
         let q_nope = q.narrow(3, 0, self.qk_nope_head_dim)?.transpose(1, 2)?;
         let q_rope = q.narrow(3, self.qk_nope_head_dim, self.qk_rope_head_dim)?.transpose(1, 2)?;
-        let q_rope = apply_rope(&q_rope, &rope_freqs.narrow(1, (total_seq_len - seq_len) as usize, seq_len)?)?;
+        let q_rope = apply_rope(&q_rope, &rope_freqs.narrow(0, (total_seq_len - seq_len) as usize, seq_len)?)?;
 
         // KV compressed latent
         let kv_a = self.kv_a_proj_with_mqa.forward(xs)?;
@@ -264,31 +276,31 @@ impl MlaAttention {
         let (k_new, v_new) = self.compute_kv(&kv_a_normed)?;
         let k_new = k_new.transpose(1, 2)?;
         let v_new = v_new.transpose(1, 2)?;
-        cache.append(&k_new, &v_new)?;
 
-        // Apply shared RoPE to K
-        let k_rope = if seq_len > 0 {
+        // Apply shared RoPE to K for the new tokens
+        let k_rope_new = if seq_len > 0 {
             apply_rope(
                 &kv_a_rope.unsqueeze(2)?.expand((b_sz, seq_len, self.num_kv_heads, self.qk_rope_head_dim))?.transpose(1, 2)?,
-                &rope_freqs.narrow(1, (total_seq_len - seq_len) as usize, seq_len)?,
+                &rope_freqs.narrow(0, (total_seq_len - seq_len) as usize, seq_len)?,
             )?
         } else {
             Tensor::zeros((b_sz, self.num_kv_heads, 0, self.qk_rope_head_dim), DType::F32, device)?
         };
 
-        // Full attention against cached history
-        let k_cached = cache.k.narrow(2, 0, total_seq_len - seq_len)?;
-        let k_full = Tensor::cat(&[&k_cached, &k_new], 2)?;
-        let v_cached = cache.v.narrow(2, 0, total_seq_len - seq_len)?;
-        let v_full = Tensor::cat(&[&v_cached, &v_new], 2)?;
+        // Append to cache (includes k_rope)
+        cache.append(&k_new, &v_new, &k_rope_new)?;
 
-        let scores_nope = q_nope.matmul(&k_full.transpose(2, 3)?)?;
-        let scores_rope = q_rope.matmul(&k_rope.transpose(2, 3)?)?;
+        // Full attention against cached history
+        let k_rope_cached = cache.k_rope.narrow(2, 0, total_seq_len - seq_len)?;
+        let k_rope_full = Tensor::cat(&[&k_rope_cached, &k_rope_new], 2)?.contiguous()?;
+
+        let scores_nope = q_nope.matmul(&cache.k.transpose(2, 3)?)?;
+        let scores_rope = q_rope.matmul(&k_rope_full.transpose(2, 3)?)?;
         let scores = (scores_nope + scores_rope)?;
         let scores = (scores * self.softmax_scale)?;
 
         let attn_weights = candle_nn::ops::softmax(&scores, 3)?;
-        let context = attn_weights.matmul(&v_full)?;
+        let context = attn_weights.matmul(&cache.v)?;
         let context = context.transpose(1, 2)?.reshape((b_sz, seq_len, self.num_heads * self.v_head_dim))?;
 
         Ok(self.o_proj.forward(&context)?)

@@ -19,9 +19,17 @@ harness = false
 name = "moe_layer"
 harness = false
 
+[[bench]]
+name = "attention"
+harness = false
+
+[features]
+fused_attn = []
+
 [dependencies]
-candle-core = { path = "resources/candle/candle-core" }
-candle-nn = { path = "resources/candle/candle-nn" }
+candle-core = { git = "https://github.com/falloficaruss/candle", branch = "qmoe-openblas", features = ["openblas"] }
+candle-nn = { git = "https://github.com/falloficaruss/candle", branch = "qmoe-openblas", features = ["openblas"] }
+openblas-src = { version = "0.10", features = ["system"] }
 anyhow = "1.0"
 clap = { version = "4.5", features = ["derive"] }
 tracing = "0.1"
