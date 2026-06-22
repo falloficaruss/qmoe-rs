@@ -1,1 +1,0 @@
-{"group_id":"attention/prefill_throughput","function_id":"seq_len","value_str":"2048","throughput":{"Elements":2048},"full_id":"attention/prefill_throughput/seq_len/2048","directory_name":"attention_prefill_throughput/seq_len/2048","title":"attention/prefill_throughput/seq_len/2048"}
