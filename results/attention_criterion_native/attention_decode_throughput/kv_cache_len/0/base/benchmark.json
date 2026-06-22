@@ -1,0 +1,1 @@
+{"group_id":"attention/decode_throughput","function_id":"kv_cache_len","value_str":"0","throughput":{"Elements":1},"full_id":"attention/decode_throughput/kv_cache_len/0","directory_name":"attention_decode_throughput/kv_cache_len/0","title":"attention/decode_throughput/kv_cache_len/0"}

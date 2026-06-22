@@ -1,0 +1,314 @@
+   Compiling qmoe_engine v0.1.0 (/home/falloficaruss/qmoe.rs)
+    Finished `bench` profile [optimized] target(s) in 4.84s
+     Running benches/attention.rs (target/release/deps/attention-ebf3c82c0626c299)
+Gnuplot not found, using plotters backend
+Benchmarking attention/prefill_throughput/seq_len/32
+Benchmarking attention/prefill_throughput/seq_len/32: Warming up for 500.00 ms
+Benchmarking attention/prefill_throughput/seq_len/32: Collecting 50 samples in estimated 3.4320 s (100 iterations)
+Benchmarking attention/prefill_throughput/seq_len/32: Analyzing
+attention/prefill_throughput/seq_len/32
+                        time:   [33.887 ms 35.167 ms 36.429 ms]
+                        thrpt:  [878.43  elem/s 909.94  elem/s 944.31  elem/s]
+                 change:
+                        time:   [+16.895% +22.251% +27.518%] (p = 0.00 < 0.05)
+                        thrpt:  [-21.579% -18.201% -14.453%]
+                        Performance has regressed.
+Benchmarking attention/prefill_throughput/seq_len/64
+Benchmarking attention/prefill_throughput/seq_len/64: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 3.4s, or reduce sample count to 20.
+Benchmarking attention/prefill_throughput/seq_len/64: Collecting 50 samples in estimated 3.4091 s (50 iterations)
+Benchmarking attention/prefill_throughput/seq_len/64: Analyzing
+attention/prefill_throughput/seq_len/64
+                        time:   [53.139 ms 55.650 ms 58.498 ms]
+                        thrpt:  [1.0941 Kelem/s 1.1500 Kelem/s 1.2044 Kelem/s]
+                 change:
+                        time:   [-0.3938% +5.3525% +11.876%] (p = 0.09 > 0.05)
+                        thrpt:  [-10.615% -5.0805% +0.3954%]
+                        No change in performance detected.
+Found 3 outliers among 50 measurements (6.00%)
+  2 (4.00%) high mild
+  1 (2.00%) high severe
+Benchmarking attention/prefill_throughput/seq_len/128
+Benchmarking attention/prefill_throughput/seq_len/128: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 5.2s, or reduce sample count to 10.
+Benchmarking attention/prefill_throughput/seq_len/128: Collecting 50 samples in estimated 5.2265 s (50 iterations)
+Benchmarking attention/prefill_throughput/seq_len/128: Analyzing
+attention/prefill_throughput/seq_len/128
+                        time:   [102.29 ms 108.61 ms 115.80 ms]
+                        thrpt:  [1.1054 Kelem/s 1.1785 Kelem/s 1.2514 Kelem/s]
+                 change:
+                        time:   [+9.8277% +17.785% +27.420%] (p = 0.00 < 0.05)
+                        thrpt:  [-21.519% -15.100% -8.9483%]
+                        Performance has regressed.
+Found 9 outliers among 50 measurements (18.00%)
+  1 (2.00%) high mild
+  8 (16.00%) high severe
+Benchmarking attention/prefill_throughput/seq_len/256
+Benchmarking attention/prefill_throughput/seq_len/256: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 11.7s, or reduce sample count to 10.
+Benchmarking attention/prefill_throughput/seq_len/256: Collecting 50 samples in estimated 11.687 s (50 iterations)
+Benchmarking attention/prefill_throughput/seq_len/256: Analyzing
+attention/prefill_throughput/seq_len/256
+                        time:   [211.42 ms 215.51 ms 219.66 ms]
+                        thrpt:  [1.1654 Kelem/s 1.1879 Kelem/s 1.2108 Kelem/s]
+                 change:
+                        time:   [+0.2458% +3.2695% +6.5126%] (p = 0.04 < 0.05)
+                        thrpt:  [-6.1144% -3.1660% -0.2452%]
+                        Change within noise threshold.
+Benchmarking attention/prefill_throughput/seq_len/512
+Benchmarking attention/prefill_throughput/seq_len/512: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 27.9s, or reduce sample count to 10.
+Benchmarking attention/prefill_throughput/seq_len/512: Collecting 50 samples in estimated 27.863 s (50 iterations)
+Benchmarking attention/prefill_throughput/seq_len/512: Analyzing
+attention/prefill_throughput/seq_len/512
+                        time:   [490.67 ms 499.44 ms 508.88 ms]
+                        thrpt:  [1.0061 Kelem/s 1.0251 Kelem/s 1.0435 Kelem/s]
+                 change:
+                        time:   [-2.5959% -0.4284% +1.8965%] (p = 0.72 > 0.05)
+                        thrpt:  [-1.8612% +0.4302% +2.6651%]
+                        No change in performance detected.
+Found 2 outliers among 50 measurements (4.00%)
+  2 (4.00%) high mild
+Benchmarking attention/prefill_throughput/seq_len/1024
+Benchmarking attention/prefill_throughput/seq_len/1024: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 76.6s, or reduce sample count to 10.
+Benchmarking attention/prefill_throughput/seq_len/1024: Collecting 50 samples in estimated 76.642 s (50 iterations)
+Benchmarking attention/prefill_throughput/seq_len/1024: Analyzing
+attention/prefill_throughput/seq_len/1024
+                        time:   [1.4601 s 1.4780 s 1.4974 s]
+                        thrpt:  [683.83  elem/s 692.82  elem/s 701.33  elem/s]
+                 change:
+                        time:   [+5.9068% +8.3283% +10.766%] (p = 0.00 < 0.05)
+                        thrpt:  [-9.7196% -7.6880% -5.5773%]
+                        Performance has regressed.
+Found 3 outliers among 50 measurements (6.00%)
+  2 (4.00%) high mild
+  1 (2.00%) high severe
+Benchmarking attention/prefill_throughput/seq_len/2048
+Benchmarking attention/prefill_throughput/seq_len/2048: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 232.5s, or reduce sample count to 10.
+Benchmarking attention/prefill_throughput/seq_len/2048: Collecting 50 samples in estimated 232.46 s (50 iterations)
+Benchmarking attention/prefill_throughput/seq_len/2048: Analyzing
+attention/prefill_throughput/seq_len/2048
+                        time:   [4.3891 s 4.4813 s 4.5868 s]
+                        thrpt:  [446.50  elem/s 457.01  elem/s 466.61  elem/s]
+                 change:
+                        time:   [+4.7627% +7.5225% +10.236%] (p = 0.00 < 0.05)
+                        thrpt:  [-9.2853% -6.9963% -4.5462%]
+                        Performance has regressed.
+Found 4 outliers among 50 measurements (8.00%)
+  3 (6.00%) high mild
+  1 (2.00%) high severe
+
+Benchmarking attention/decode_throughput/kv_cache_len/0
+Benchmarking attention/decode_throughput/kv_cache_len/0: Warming up for 500.00 ms
+Benchmarking attention/decode_throughput/kv_cache_len/0: Collecting 50 samples in estimated 2.1205 s (400 iterations)
+Benchmarking attention/decode_throughput/kv_cache_len/0: Analyzing
+attention/decode_throughput/kv_cache_len/0
+                        time:   [5.1822 ms 5.2886 ms 5.4033 ms]
+                        thrpt:  [185.07  elem/s 189.08  elem/s 192.97  elem/s]
+                 change:
+                        time:   [-6.7718% -3.5665% -0.1762%] (p = 0.04 < 0.05)
+                        thrpt:  [+0.1765% +3.6983% +7.2637%]
+                        Change within noise threshold.
+Found 2 outliers among 50 measurements (4.00%)
+  2 (4.00%) high mild
+Benchmarking attention/decode_throughput/kv_cache_len/64
+Benchmarking attention/decode_throughput/kv_cache_len/64: Warming up for 500.00 ms
+Benchmarking attention/decode_throughput/kv_cache_len/64: Collecting 50 samples in estimated 2.0995 s (350 iterations)
+Benchmarking attention/decode_throughput/kv_cache_len/64: Analyzing
+attention/decode_throughput/kv_cache_len/64
+                        time:   [5.8478 ms 5.9619 ms 6.0861 ms]
+                        thrpt:  [164.31  elem/s 167.73  elem/s 171.00  elem/s]
+                 change:
+                        time:   [-27.517% -22.701% -18.027%] (p = 0.00 < 0.05)
+                        thrpt:  [+21.992% +29.367% +37.963%]
+                        Performance has improved.
+Found 3 outliers among 50 measurements (6.00%)
+  3 (6.00%) high mild
+Benchmarking attention/decode_throughput/kv_cache_len/256
+Benchmarking attention/decode_throughput/kv_cache_len/256: Warming up for 500.00 ms
+Benchmarking attention/decode_throughput/kv_cache_len/256: Collecting 50 samples in estimated 2.1052 s (250 iterations)
+Benchmarking attention/decode_throughput/kv_cache_len/256: Analyzing
+attention/decode_throughput/kv_cache_len/256
+                        time:   [8.1901 ms 8.3757 ms 8.5842 ms]
+                        thrpt:  [116.49  elem/s 119.39  elem/s 122.10  elem/s]
+                 change:
+                        time:   [-14.459% -11.675% -8.7272%] (p = 0.00 < 0.05)
+                        thrpt:  [+9.5616% +13.219% +16.903%]
+                        Performance has improved.
+Found 4 outliers among 50 measurements (8.00%)
+  2 (4.00%) high mild
+  2 (4.00%) high severe
+Benchmarking attention/decode_throughput/kv_cache_len/1024
+Benchmarking attention/decode_throughput/kv_cache_len/1024: Warming up for 500.00 ms
+Benchmarking attention/decode_throughput/kv_cache_len/1024: Collecting 50 samples in estimated 2.4382 s (150 iterations)
+Benchmarking attention/decode_throughput/kv_cache_len/1024: Analyzing
+attention/decode_throughput/kv_cache_len/1024
+                        time:   [15.509 ms 15.838 ms 16.184 ms]
+                        thrpt:  [61.791  elem/s 63.139  elem/s 64.477  elem/s]
+Benchmarking attention/decode_throughput/kv_cache_len/4096
+Benchmarking attention/decode_throughput/kv_cache_len/4096: Warming up for 500.00 ms
+
+Warning: Unable to complete 50 samples in 2.0s. You may wish to increase target time to 4.7s, or reduce sample count to 20.
+Benchmarking attention/decode_throughput/kv_cache_len/4096: Collecting 50 samples in estimated 4.7380 s (50 iterations)
+Benchmarking attention/decode_throughput/kv_cache_len/4096: Analyzing
+attention/decode_throughput/kv_cache_len/4096
+                        time:   [87.541 ms 90.201 ms 92.889 ms]
+                        thrpt:  [10.766  elem/s 11.086  elem/s 11.423  elem/s]
+
+Benchmarking attention/prefill_breakdown/seq_len_512
+Benchmarking attention/prefill_breakdown/seq_len_512: Warming up for 500.00 ms
+
+Warning: Unable to complete 30 samples in 2.0s. You may wish to increase target time to 15.3s, or reduce sample count to 10.
+Benchmarking attention/prefill_breakdown/seq_len_512: Collecting 30 samples in estimated 15.270 s (30 iterations)
+Benchmarking attention/prefill_breakdown/seq_len_512: Analyzing
+attention/prefill_breakdown/seq_len_512
+                        time:   [467.86 ms 476.70 ms 486.33 ms]
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+
+Benchmarking attention/decode_breakdown/kv_cache_1024
+Benchmarking attention/decode_breakdown/kv_cache_1024: Warming up for 500.00 ms
+Benchmarking attention/decode_breakdown/kv_cache_1024: Collecting 30 samples in estimated 2.0540 s (120 iterations)
+Benchmarking attention/decode_breakdown/kv_cache_1024: Analyzing
+attention/decode_breakdown/kv_cache_1024
+                        time:   [16.082 ms 16.380 ms 16.688 ms]
+
+
+## Attention Prefill Breakdown — Single-Shot Timing
+
+Config: hidden_size=2048, num_heads=16, kv_lora_rank=512
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+
+### seq_len = 32
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+| Q projection | 14610.50 µs (14.61 ms) | 40.4% |
+| KV projection + norm | 4049.62 µs (4.05 ms) | 11.2% |
+| KV decompression | 4338.15 µs (4.34 ms) | 12.0% |
+| RoPE (precompute + apply) | 819.71 µs | 2.3% |
+| Attention scores | 777.47 µs | 2.2% |
+| Context + output proj | 11554.22 µs (11.55 ms) | 32.0% |
+| KV cache ops | 0.07 µs | 0.0% |
+| **Total** | **36149.74 µs** | **100%** |
+
+### seq_len = 128
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+| Q projection | 43505.94 µs (43.51 ms) | 37.4% |
+| KV projection + norm | 11865.38 µs (11.87 ms) | 10.2% |
+| KV decompression | 13491.79 µs (13.49 ms) | 11.6% |
+| RoPE (precompute + apply) | 3808.19 µs (3.81 ms) | 3.3% |
+| Attention scores | 13623.20 µs (13.62 ms) | 11.7% |
+| Context + output proj | 29950.78 µs (29.95 ms) | 25.8% |
+| KV cache ops | 0.07 µs | 0.0% |
+| **Total** | **116245.35 µs** | **100%** |
+
+### seq_len = 512
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+| Q projection | 107112.55 µs (107.11 ms) | 24.5% |
+| KV projection + norm | 27653.57 µs (27.65 ms) | 6.3% |
+| KV decompression | 34438.17 µs (34.44 ms) | 7.9% |
+| RoPE (precompute + apply) | 10227.70 µs (10.23 ms) | 2.3% |
+| Attention scores | 159610.70 µs (159.61 ms) | 36.6% |
+| Context + output proj | 97339.63 µs (97.34 ms) | 22.3% |
+| KV cache ops | 0.07 µs | 0.0% |
+| **Total** | **436382.39 µs** | **100%** |
+
+### seq_len = 2048
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+| Q projection | 400639.66 µs (400.64 ms) | 10.1% |
+| KV projection + norm | 111643.96 µs (111.64 ms) | 2.8% |
+| KV decompression | 162544.88 µs (162.54 ms) | 4.1% |
+| RoPE (precompute + apply) | 61492.63 µs (61.49 ms) | 1.5% |
+| Attention scores | 2668747.57 µs (2668.75 ms) | 67.0% |
+| Context + output proj | 576348.20 µs (576.35 ms) | 14.5% |
+| KV cache ops | 0.08 µs | 0.0% |
+| **Total** | **3981416.97 µs** | **100%** |
+
+
+## Attention Decode Breakdown — Single-Shot Timing
+
+Config: hidden_size=2048, num_heads=16, kv_lora_rank=512
+
+
+### kv_cache_len = 0
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+| Q projection | 2416.76 µs (2.42 ms) | 45.1% |
+| KV projection + norm | 461.71 µs | 8.6% |
+| KV decompression | 809.31 µs | 15.1% |
+| RoPE (precompute + apply) | 94.68 µs | 1.8% |
+| Attention scores | 49.70 µs | 0.9% |
+| Context + output proj | 1506.53 µs (1.51 ms) | 28.1% |
+| KV cache append | 16.79 µs | 0.3% |
+| **Total** | **5355.47 µs** | **100%** |
+
+### kv_cache_len = 64
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+| Q projection | 2494.14 µs (2.49 ms) | 39.4% |
+| KV projection + norm | 461.10 µs | 7.3% |
+| KV decompression | 824.27 µs | 13.0% |
+| RoPE (precompute + apply) | 156.75 µs | 2.5% |
+| Attention scores | 302.17 µs | 4.8% |
+| Context + output proj | 1732.30 µs (1.73 ms) | 27.4% |
+| KV cache append | 354.02 µs | 5.6% |
+| **Total** | **6324.75 µs** | **100%** |
+
+### kv_cache_len = 256
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+| Q projection | 2287.42 µs (2.29 ms) | 28.5% |
+| KV projection + norm | 424.64 µs | 5.3% |
+| KV decompression | 749.18 µs | 9.3% |
+| RoPE (precompute + apply) | 265.22 µs | 3.3% |
+| Attention scores | 1083.45 µs (1.08 ms) | 13.5% |
+| Context + output proj | 1858.81 µs (1.86 ms) | 23.1% |
+| KV cache append | 1363.25 µs (1.36 ms) | 17.0% |
+| **Total** | **8031.96 µs** | **100%** |
+
+### kv_cache_len = 1024
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+| Q projection | 2442.95 µs (2.44 ms) | 15.2% |
+| KV projection + norm | 456.88 µs | 2.8% |
+| KV decompression | 810.75 µs | 5.0% |
+| RoPE (precompute + apply) | 855.84 µs | 5.3% |
+| Attention scores | 4275.14 µs (4.28 ms) | 26.5% |
+| Context + output proj | 3726.40 µs (3.73 ms) | 23.1% |
+| KV cache append | 3556.91 µs (3.56 ms) | 22.1% |
+| **Total** | **16124.88 µs** | **100%** |
+
+### kv_cache_len = 4096
+
+| Sub-stage | μs | % of total |
+|-----------|----|-----------|
+| Q projection | 2424.93 µs (2.42 ms) | 2.7% |
+| KV projection + norm | 452.55 µs | 0.5% |
+| KV decompression | 771.68 µs | 0.8% |
+| RoPE (precompute + apply) | 3339.32 µs (3.34 ms) | 3.7% |
+| Attention scores | 28143.92 µs (28.14 ms) | 30.9% |
+| Context + output proj | 11131.41 µs (11.13 ms) | 12.2% |
+| KV cache append | 44741.41 µs (44.74 ms) | 49.2% |
+| **Total** | **91005.23 µs** | **100%** |
+
