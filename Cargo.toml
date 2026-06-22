@@ -23,6 +23,10 @@ harness = false
 name = "attention"
 harness = false
 
+[[bench]]
+name = "decoder_layer"
+harness = false
+
 [features]
 fused_attn = []
 
